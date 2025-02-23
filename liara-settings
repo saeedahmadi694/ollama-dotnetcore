@@ -1,0 +1,7 @@
+port 80
+GoldSaz.Shop.Presenter.Web
+GoldSaz.Shop/GoldSaz.Shop.Presenter.Web/GoldSaz.Shop.Presenter.Web.csproj
+
+port 80
+GoldSaz.Shop.Presenter.API
+GoldSaz.Shop/GoldSaz.Shop.Presenter.API/GoldSaz.Shop.Presenter.API.csproj

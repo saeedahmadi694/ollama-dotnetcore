@@ -1,6 +1,7 @@
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +13,24 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
+
+// Register the vector type with Npgsql globally
+
+// Update the DbContext registration
+var ss = (builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddDbContext<RagDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        o => o.EnableRetryOnFailure()
+    ));
+
+// Add this after DbContext registration
+//using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<RagDbContext>();
+//    var sql = File.ReadAllText("Data/Migrations/001_CreateDocumentsTable.sql");
+//    dbContext.Database.ExecuteSqlRaw(sql);
+//}
+
 builder.Services.AddScoped<IVectorStore, VectorStore>();
 
 // Get connection string
@@ -47,8 +64,8 @@ builder.Services.AddScoped<IDocumentProcessingService, DocumentProcessingService
 builder.Services.AddSingleton<IEmbeddingService, OllamaEmbeddingService>();
 
 // Add health checks
-builder.Services.AddHealthChecks()
-    .AddCheck<OllamaHealthCheck>("ollama_service");
+//builder.Services.AddHealthChecks()
+//    .AddCheck<OllamaHealthCheck>("ollama_service");
 
 var app = builder.Build();
 

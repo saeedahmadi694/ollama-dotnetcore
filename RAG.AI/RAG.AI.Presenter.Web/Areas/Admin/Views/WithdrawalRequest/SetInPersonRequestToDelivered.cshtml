@@ -1,0 +1,95 @@
+﻿@using RAG.AI.Application.Commands.Operations.CreateCashWithdrawalOperation
+@using RAG.AI.Application.Commands.WithdrawalRequests.ChangeInPersonRequest
+
+@model ChangeInPersonRequestStatusCommand
+@{
+    ViewData["Title"] = "تایید تحویل حضوری";
+}
+
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"]
+        </h4>
+
+    </div>
+    <div class="card-body">
+
+        <form role="form" id="form" enctype="multipart/form-data">
+            <input asp-for="Id" type="hidden">
+            <input asp-for="Status" type="hidden">
+
+            <div class="row">
+
+
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12 ">
+                        تاریخ
+                    </label>
+                    <input type="text" data-jdp class="form-control" asp-for="ReadyDeliverDateString" autocomplete="off" />
+
+                </div>
+
+
+                <div class="form-group  col-12">
+                    <label for="title"> توضیحات</label>
+                    <textarea asp-for="Description" type="text" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text text-danger mb-2"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mx-1 submitBtn">ثبت</button>
+            <div class="clearfix"></div>
+        </form>
+
+
+        <br>
+    </div>
+</div>
+
+
+
+
+<partial name="_ValidationScriptsPartial" />
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/util/persian-datepicker/persian-date.min.js"></script>
+<script src="~/util/persian-datepicker/persian-datepicker.min.js"></script>
+
+<script>
+
+    $("#form").on('submit', function (e) {
+
+        e.preventDefault();
+        if ($("#form").valid() === false) return;
+        $(".submitBtn").prop('disabled', true);
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            method: 'PATCH',
+            url: '@Url.Action("SetInPersonRequestToDelivered")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                let result = response
+
+                toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                location.reload();
+                $(".submitBtn").prop('disabled', false);
+            },
+            error: function (e) {
+                $(".submitBtn").prop('disabled', false);
+                    toastr.error(e.responseJSON.detail, 'خطا');
+            }
+        });
+    });
+
+
+
+</script>
+
+
+
+

@@ -1,0 +1,19 @@
+﻿@using RAG.AI.Domain.Aggregates.PaymentAggregate
+@model PaymentRequest;
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if(Model==null)
+{
+    <h1>Getting Payment Details...</h1>
+}
+else
+{
+    <h1>Payment with id: @Model.UniqueId</h1>
+    <br />
+    <h2>Is Paid: @Model.IsSucceeded</h2>
+}
+
+
+

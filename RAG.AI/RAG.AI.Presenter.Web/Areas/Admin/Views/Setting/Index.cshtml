@@ -1,0 +1,331 @@
+﻿@using RAG.AI.Application.Commands.Settings.EditSetting
+@using RAG.AI.Domain.Aggregates.Common
+@using RAG.AI.Domain.Aggregates.SettingAggregate
+@using RAG.AI.Infrastructure.Extentions
+@using RAG.AI.Infrastructure.Extentions.Localizations
+@model EditSettingCommand
+@{
+    ViewData["Title"] = "تنظیمات";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-dark">
+            <div class="card-header bg-dark">
+                <h4 class="m-b-0 text-white">@ViewData["Title"]</h4>
+            </div>
+            <div class="card-body">
+                <form id="sub-form" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+
+                    <!-- WebService Settings -->
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label asp-for="WebServiceSettingIsActive" class="form-label">فعال بودن تنظیمات وب سرویس:</label><br />
+                            <label class="switch">
+                                <input type="checkbox" asp-for="WebServiceSettingIsActive" />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="WebServiceSettingRetriesCount" class="form-label">تعداد تلاش‌های وب سرویس:</label>
+                            <input class="form-control" type="number" asp-for="WebServiceSettingRetriesCount" />
+                            <span asp-validation-for="WebServiceSettingRetriesCount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <!-- Buy Settings -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label asp-for="BuySettingIsActive" class="form-label">فعال بودن تنظیمات خرید:</label><br />
+                            <label class="switch">
+                                <input type="checkbox" asp-for="BuySettingIsActive" />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="BuySettingMinAmount" class="form-label">حداقل مقدار خرید(g):</label>
+                            <input class="form-control" type="number" asp-for="BuySettingMinAmount" />
+                            <span asp-validation-for="BuySettingMinAmount" class="text-danger"></span>
+                        </div>
+                        @*        <div class="col-md-3">
+                        <label asp-for="BuySettingWage" class="form-label">کارمزد:</label>
+                        <input class="form-control" type="number" asp-for="BuySettingWage" />
+                        <span asp-validation-for="BuySettingWage" class="text-danger"></span>
+                        </div> *@
+                        <div class="col-md-3">
+                            <label asp-for="BuySettingDefaultGoldPrice" class="form-label ">قیمت پیش‌فرض طلا:</label>
+                            <input class="form-control to-seperator" type="number" asp-for="BuySettingDefaultGoldPrice" />
+                            <span asp-validation-for="BuySettingDefaultGoldPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <!-- Sell Settings -->
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <label asp-for="SellSettingIsActive" class="form-label">فعال بودن تنظیمات فروش:</label><br />
+                            <label class="switch">
+                                <input type="checkbox" asp-for="SellSettingIsActive" />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="SellSettingMinAmount" class="form-label">حداقل مقدار فروش(g):</label>
+                            <input class="form-control" type="number" asp-for="SellSettingMinAmount" />
+                            <span asp-validation-for="SellSettingMinAmount" class="text-danger"></span>
+                        </div>
+                        @* <div class="col-md-3">
+                        <label asp-for="SellSettingWage" class="form-label">کارمزد:</label>
+                        <input class="form-control" type="number" asp-for="SellSettingWage" />
+                        <span asp-validation-for="SellSettingWage" class="text-danger"></span>
+                        </div> *@
+                        <div class="col-md-3">
+                            <label asp-for="SellSettingDefaultGoldPrice" class="form-label">قیمت پیش‌فرض طلا:</label>
+                            <input class="form-control to-seperator" type="number" asp-for="SellSettingDefaultGoldPrice" />
+                            <span asp-validation-for="SellSettingDefaultGoldPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <!-- SignUp Setting -->
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label asp-for="SignUpSettingIsActive" class="form-label">فعال بودن تنظیمات ثبت نام:</label><br />
+                            <label class="switch">
+                                <input type="checkbox" asp-for="SignUpSettingIsActive" />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="SignUpSettingGiftAmount" class="form-label">هدیه ثبت نام(g):</label>
+                            <input class="form-control" type="number" asp-for="SignUpSettingGiftAmount" placeholder="مبلغ هدیه" />
+                            <span asp-validation-for="SignUpSettingGiftAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <!-- Referral Settings -->
+                    <div class="row mt-3">
+                        <div class="col-md-4 col-12">
+                            <label asp-for="ReferralSettingIsActive" class="form-label">فعال بودن هدیه معرفی:</label><br />
+                            <label class="switch">
+                                <input type="checkbox" asp-for="ReferralSettingIsActive" />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <label asp-for="ReferralSettingReferralGiftAmount" class="form-label">هدیه معرفی(g):</label>
+                            <input class="form-control" type="number" asp-for="ReferralSettingReferralGiftAmount" />
+                            <span asp-validation-for="ReferralSettingReferralGiftAmount" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <label class="control-label col-md-12 col-sm-12 col-12 ">
+                                نوع
+                            </label>
+                            <select class="form-control" asp-for="ReferralSettingReferralGiftType">
+                                <option value="" selected disabled> انتخاب کنید</option>
+                                <option value="@ReferralGiftType.Both.Id">@(LocalizationSource.L(ReferralGiftType.Both.Name))</option>
+                                <option value="@ReferralGiftType.Owner.Id">@(LocalizationSource.L(ReferralGiftType.Owner.Name))</option>
+                                <option value="@ReferralGiftType.Consumer.Id">@(LocalizationSource.L(ReferralGiftType.Consumer.Name))</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <!-- CashBack Settings -->
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label asp-for="CashBackSettingIsActive" class="form-label">فعال بودن برداشت نقدی:</label><br />
+                            <label class="switch">
+                                <input type="checkbox" asp-for="CashBackSettingIsActive" />
+                                <span class="slider"></span>
+                            </label>
+
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="CashBackSettingMinAmount" class="form-label">حداقل مبلغ برداشت نقدی:</label>
+                            <input class="form-control to-seperator" type="number" asp-for="CashBackSettingMinAmount" />
+                            <span asp-validation-for="CashBackSettingMinAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <h5>لیست کارمزد ها</h5>
+
+                        <!-- Input Fields -->
+                        <div class="row mb-3">
+                            <div class="col-12 col-md-4">
+                                <input type="number" id="cashback-from" class="form-control to-seperator me-2" placeholder="از مبلغ" />
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <input type="number" id="cashback-to" class="form-control to-seperator me-2" placeholder="تا مبلغ" />
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <input type="number" id="cashback-wage" class="form-control me-2" placeholder="کارمزد (%)" />
+                            </div>
+                            <div class="col-12 col-md-1">
+                                <button type="button" class="btn btn-primary" id="add-cashback-wage-row" onclick="AddCashBackWage()">اضافه کردن</button>
+                            </div>
+                        </div>
+
+                        <!-- Table -->
+                        <table class="table table-bordered" id="cashback-wages-table">
+                            <thead>
+                                <tr>
+                                    <th>از مبلغ</th>
+                                    <th>تا مبلغ</th>
+                                    <th>کارمزد (%)</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cashBackWagesTableBody">
+                                <!-- Existing rows will go here (if editing existing data) -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <hr />
+
+                    <!-- InPerson Setting -->
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label asp-for="InPersonSettingIsActive" class="form-label">فعال بودن برداشت حضوری:</label><br />
+                            <label class="switch">
+                                <input type="checkbox" asp-for="InPersonSettingIsActive" />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="InPersonSettingMinAmount" class="form-label">حداقل مقدار برداشت حضوری(g):</label>
+                            <input class="form-control" type="number" asp-for="InPersonSettingMinAmount" placeholder="حداقل مقدار برداشت حضوری" />
+                            <span asp-validation-for="InPersonSettingMinAmount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <h5>لیست کارمزد ها</h5>
+
+                        <!-- Input Fields -->
+                        <div class="d-flex mb-3">
+                            <input type="number" id="inperson-from" class="form-control me-2" placeholder="از مقدار" />
+                            <input type="number" id="inperson-to" class="form-control me-2" placeholder="تا مقدار" />
+                            <input type="number" id="inperson-wage" class="form-control me-2" placeholder="کارمزد (%)" />
+                            <button type="button" class="btn btn-primary" id="add-Inperson-wage-row" onclick="AddInPersonWage()">اضافه کردن</button>
+                        </div>
+
+                        <!-- Table -->
+                        <table class="table table-bordered" id="Inperson-wages-table">
+                            <thead>
+                                <tr>
+                                    <th>از مقدار</th>
+                                    <th>تا مقدار</th>
+                                    <th>کارمزد (%)</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inPersonWagesTableBody">
+                                <!-- Existing rows will go here (if editing existing data) -->
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+
+
+                    <div class="my-3">
+                        <button type="submit" class="btn btn-warning submit">ثبت تغییرات</button>
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-danger">بازگشت</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/setting.js"></script>
+    <script>
+
+
+
+
+
+        $("#sub-form").on('submit', function (e) {
+            e.preventDefault();
+            if ($("#sub-form").valid() === false) return;
+            $(".submit").prop('disabled', true);
+
+            var formData = new FormData($(this)[0]);
+            setInPersonWage(formData);
+            setCasheBackWage(formData)
+
+            $.ajax({
+                method: 'PUT',
+                url: '@Url.Action("Index")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    $(".submit").prop('disabled', false);
+                    var result = response;
+
+                    toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                    return;
+
+                },
+                error: function (response) {
+                    $(".submit").prop('disabled', false);
+                    var message = result.message;
+                    toastr.error(message, 'خطا');
+                }
+            });
+        });
+
+
+        function initCachBack() {
+            let json = @Html.Raw(Model.CashBackSettingWages.ToJson("cashBacks"));
+            if (json === null || typeof json.result !== "object" || !Array.isArray(json.result)) {
+                json.result = []; // Default to an empty array
+            }
+
+            json.result.forEach(function (item) {
+                casheBackWages.push(new WageSettingDto(item.From, item.To, item.Wage));
+            });
+            renderCashBackWageTable();
+        }
+        function initInPerson() {
+            let json = @Html.Raw(Model.InPersonSettingWages.ToJson("inPersons"));
+            if (json === null || typeof json.result !== "object" || !Array.isArray(json.result)) {
+                json.result = []; // Default to an empty array
+            }
+            json.result.forEach(function (item) {
+                inPersonWages.push(new WageSettingDto(item.From, item.To, item.Wage));
+            });
+            renderInPersonWageTable();
+        }
+
+
+        (function () {
+            initCachBack();
+            initInPerson();
+        })();
+    </script>
+}
+
+
+

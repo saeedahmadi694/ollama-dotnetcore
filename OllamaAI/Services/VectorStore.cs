@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using NpgsqlTypes;
 
 public interface IVectorStore
 {
@@ -35,19 +36,28 @@ public class VectorStore : IVectorStore
 
     public async Task StoreDocuments(List<string> chunks, float[][] embeddings)
     {
+        // Prepare batch parameters
+        var parameters = new List<NpgsqlParameter>();
+        var valuesList = new List<string>();
+
         for (int i = 0; i < chunks.Count; i++)
         {
-            var document = new DocumentEntity
+            var contentParam = new NpgsqlParameter($"content_{i}", chunks[i]);
+            var vectorParam = new NpgsqlParameter($"vector_{i}", NpgsqlTypes.NpgsqlDbType.Unknown)
             {
-                Content = chunks[i],
-                Embedding = embeddings[i],
-                CreatedAt = DateTime.UtcNow
+                Value = new Pgvector.Vector(embeddings[i])
             };
+            var createdAtParam = new NpgsqlParameter($"created_at_{i}", DateTime.UtcNow);
 
-            _context.Documents.Add(document);
+            parameters.AddRange(new[] { contentParam, vectorParam, createdAtParam });
+            valuesList.Add($"(@content_{i}, @vector_{i}::vector, @created_at_{i})");
         }
 
-        await _context.SaveChangesAsync();
+        var sql = $@"
+            INSERT INTO documents (content, embedding, created_at)
+            VALUES {string.Join(",", valuesList)}";
+
+        await _context.Database.ExecuteSqlRawAsync(sql, parameters.ToArray());
     }
 
     public async Task<List<Document>> SearchSimilarDocuments(float[] queryEmbedding, int k)
@@ -91,7 +101,7 @@ public class VectorStore : IVectorStore
         var document = new DocumentEntity
         {
             Content = content,
-            Embedding = embedding,
+            Embedding = new Pgvector.Vector(embedding),
             Title = title,
             Metadata = metadata ?? new Dictionary<string, string>(),
             CreatedAt = DateTime.UtcNow

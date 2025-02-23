@@ -1,0 +1,91 @@
+﻿@using RAG.AI.Application.Commands.FAQs.CreateFAQ
+@model CreateFAQCommand
+@{
+    ViewData["Title"] = "افزودن سوال";
+}
+
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"]
+        </h4>
+
+    </div>
+    <div class="card-body">
+
+        <form role="form" id="form" enctype="multipart/form-data">
+            <div class="row">
+                <input asp-for="IsActive" type="hidden" value="true">
+                <div class="form-group  col-12">
+                    <label for="title">سوال</label>
+                    <input asp-for="Question" type="text" class="form-control">
+                    <span asp-validation-for="Question" class="text text-danger mb-2"></span>
+                </div>
+
+                <div class="form-group  col-12">
+                    <label for="title"> پاسخ</label>
+                    <input asp-for="Answer" type="text" class="form-control">
+                    <span asp-validation-for="Answer" class="text text-danger mb-2"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mx-1 submitBtn">ایجاد</button>
+            <a href="@Url.Action("Index")" class="btn btn-danger mx-1">بازگشت</a>
+            <div class="clearfix"></div>
+        </form>
+
+
+        <br>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        $("#form").on('submit', function (e) {
+
+            e.preventDefault();
+            if ($("#form").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                method: 'POST',
+                url: '@Url.Action("Create")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let result = response
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                    location.href = '@Url.Action("Index")'
+
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function (e) {
+                    $(".submitBtn").prop('disabled', false);
+                    toastr.error(e.responseJSON.detail, 'خطا');
+                }
+            });
+        });
+
+
+
+    </script>
+}
+
+
+
+

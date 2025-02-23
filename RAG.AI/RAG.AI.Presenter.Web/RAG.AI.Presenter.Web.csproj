@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>6a1e530b-3b04-4aad-936e-64a441b587f7</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Controllers\CommunicationController.cs" />
+    <Compile Remove="Areas\Admin\Controllers\CreditController.cs" />
+    <Compile Remove="Areas\Admin\Controllers\PaymentController.cs" />
+    <Compile Remove="Controllers\CashBacksController.cs" />
+    <Compile Remove="Controllers\FAQCategoryController.cs" />
+    <Compile Remove="Controllers\FAQController.cs" />
+    <Compile Remove="Controllers\LoginController.cs" />
+    <Compile Remove="Controllers\OperationsController.cs" />
+    <Compile Remove="Controllers\TicketCategoryController.cs" />
+    <Compile Remove="Controllers\TicketController.cs" />
+    <Compile Remove="Controllers\TicketDiscussionController.cs" />
+    <Compile Remove="Controllers\TicketFileController.cs" />
+    <Compile Remove="Controllers\UserBankController.cs" />
+    <Compile Remove="Controllers\UserController.cs" />
+    <Compile Remove="Controllers\WalletChargeRequestController.cs" />
+    <Compile Remove="Controllers\WalletsController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Admin\Views\User\Create.cshtml" />
+    <Content Remove="Areas\Admin\Views\User\Edit.cshtml" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+		<PackageReference Include="MediatR" Version="12.4.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+		<PackageReference Include="Serilog" Version="4.1.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\RAG.AI.Application\RAG.AI.Application.csproj" />
+		<ProjectReference Include="..\RAG.AI.BackgroundTasks\RAG.AI.BackgroundTasks.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="Areas\Admin\Views\GoldTradeRequest\SellRequest.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Update="wwwroot\setting.js">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+</Project>
+
+

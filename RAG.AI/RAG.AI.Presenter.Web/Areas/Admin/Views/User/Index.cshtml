@@ -1,0 +1,364 @@
+﻿@using RAG.AI.Infrastructure.Extentions
+@using RAG.AI.Presenter.Web.Areas.Admin.ViewModels.UserViewModels
+@model UserViewModel
+@{
+    ViewData["Title"] = "کاربران";
+}
+
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"] / (@Model.PagingHandler.TotalCount)
+        </h4>
+        <div class="dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div class="dropdown-menu px-3" aria-labelledby="dropdownMenuButton">
+                <a asp-action="ExportUsers" class="btn btn-primary btn-rounded mb-3 btn-block"><i class="fa fa-file-excel"></i> خروجی</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row ">
+            <div class="col-12">
+                <fieldset>
+                    <form asp-action="Index" id="subForm">
+                        <input type="hidden" asp-for="Query.PageNumber" name="PageNumber" id="pageId" value="1" />
+                        <input type="hidden" asp-for="Query.PageSize" name="Take" />
+
+                        <div class="row">
+                            <div class="col-md-2 col-12 form-group">
+                                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                                    جستجو
+                                </label>
+                                <input type="text" name="Filter" asp-for="Query.Filter" class="form-control">
+                            </div>
+
+                            <div class="col-md-2 col-12 form-group">
+                                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                                    وضعیت
+                                </label>
+                                <select class="form-control" asp-for="Query.IsActive" name="IsActive">
+                                    <option value="" selected> انتخاب کنید</option>
+                                    <option value="true">فعال</option>
+                                    <option value="false">غیر فعال</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-12 form-group">
+                                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                                    &nbsp;
+                                </label>
+                                <button type="submit" class="btn btn-info" style="font-weight: bold;"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="table-responsive" style="min-height: 50vh">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>عملیات</th>
+                        <th>
+                            تلفن همراه
+                        </th>
+                        <th>
+                            نام و نام خانوادگی
+                        </th>
+                        <th>
+                            کد ملی
+                        </th>
+                        <th>
+                            سطح کاربری
+                        </th>
+                        <th>
+                            تاریخ
+                        </th>
+                        <th>
+                            وضعیت
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.PagingHandler.Items.Any())
+                    {
+                        @foreach (var item in Model.PagingHandler.Items)
+                        {
+                            <tr id="table_@item.Id">
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                        <div class="dropdown-menu px-3" aria-labelledby="dropdownMenuButton">
+                                            <p>
+                                                <a class="btn btn-primary btn-sm btn-block" href="javascript:void(0)" onclick="detail(@item.Id)">
+                                                    جزئیات
+                                                </a>
+                                            </p>
+                                                <p>
+                                                <a class="btn btn-info btn-sm btn-block" href="javascript:void(0)" onclick="submitTicket(@item.Id)">
+                                                    ارسال تیکت
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @item.Mobile
+                                </td>
+                                <td>
+                                    @item.FirstName @item.LastName
+                                </td>
+                                <td>
+                                    @item.NationalCode
+                                </td>
+                                <td>
+                                    سطح 1
+                                </td>
+                                <td>
+                                    @item.CreationTime.ToShamsi()
+                                </td>
+                                <td>
+                                    <label class="switch">
+                                        <input id="@item.Id" type="checkbox" class="checkBoxSaeed" checked="@item.IsActive" value="@item.IsActive">
+                                        <span class="slider"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <p>رکوردی وجود ندارد</p>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+
+            <div class="d-flex">
+                @if (Model.PagingHandler.PageCount > 1)
+                {
+                    <nav class="custom-pagination" aria-label="Page navigation example">
+                        <ol class="pagination" reversed="reversed">
+
+                            <li class="page-item @(Model.PagingHandler.ActivePage <= 1 ? "disabled" : "") ">
+                                <a onclick="ArrowPage(-1)" class="page-link" href="javascript:void(0)" aria-label="Previous">
+                                    <span aria-hidden="true">«</span>
+                                </a>
+                            </li>
+                            @for (int counter = Model.PagingHandler.StartPage; counter <= Model.PagingHandler.EndPage; counter++)
+                            {
+                                <li class="page-item @(Model.PagingHandler.ActivePage == counter ? "active" : "")"><a onclick="SetPage(@counter)" class="page-link" href="javascript:void(0)">@counter</a></li>
+                            }
+
+                            <li class="page-item @(Model.PagingHandler.EndPage <= Model.PagingHandler.ActivePage ? "disabled" : "")">
+                                <a onclick="ArrowPage(1)" class="page-link" href="javascript:void(0)" aria-label="Next">
+                                    <span aria-hidden="true">»</span>
+                                </a>
+                            </li>
+
+                        </ol>
+                    </nav>
+                }
+                <div class="col-md-2 col-12 mt-1">
+                    <Select onchange="changeTake(this)" asp-for="Query.PageSize" class="form-control">
+                        <option value=10>10</option>
+                        <option value=30>30</option>
+                        <option value=50>50</option>
+                        <option value=80>80</option>
+                        <option value=100>100</option>
+                    </Select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="myModalBody">
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        
+        function detail(id) {
+            $.get('@Url.Action("Detail")/'+id,function (result) {
+                    $("#myModal").modal();
+                    $("#myModalLabel").html("جزئیات");
+                    $("#myModalBody").html(result);
+                });
+        }
+              
+        function submitTicket(id) {
+            $.get('@Url.Action("CreateTicket","Ticket")/'+id,function (result) {
+                    $("#myModal").modal();
+                    $("#myModalLabel").html("تیکت");
+                    $("#myModalBody").html(result);
+                });
+        }
+
+        function depositOperation(id) {
+            $.get('@Url.Action("CreateTicket", "Ticket")/' + id, function (result) {
+                $("#myModal").modal();
+                $("#myModalLabel").html("تیکت");
+                $("#myModalBody").html(result);
+            });
+        }
+
+        function creditOperation(id) {
+            $.get('@Url.Action("CreateTicket", "Ticket")/' + id, function (result) {
+                $("#myModal").modal();
+                $("#myModalLabel").html("تیکت");
+                $("#myModalBody").html(result);
+            });
+        }
+        $(".checkBoxSaeed").change(function (e) {
+
+            var value = e.target.checked;
+            var id = $(this).attr('id');
+            swalWithBootstrapButtons.fire({
+                title: 'آیا از این تغییر مطمئن هستید ؟',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'انجام',
+                cancelButtonText: 'بازگشت',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Loader.open();
+
+                    $.ajax({
+                        type: "PATCH",
+                        url: '@Url.Action("ChangeDisplayStatus")',
+                        data: { id: id },
+                        success: (result) => {
+                            toastr.success('عملیات با موفقیت انجام شد', 'موفق');
+                        },
+                        error: (e) => {
+                            toastr.error('Error', 'Error');
+                        },
+                        complete: function () {
+                            Loader.close();
+                        }
+                    });
+                }
+                else if (result.isDismissed) {
+
+                    if (value === true) {
+                        $(this).prop("checked", false);
+                    };
+                    if (value === false) {
+                        $(this).prop("checked", true);
+                    };
+                }
+            });
+        });
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success ',
+                cancelButton: 'btn btn-danger ml-3'
+            },
+            buttonsStyling: false
+        });
+
+        function Delete(id) {
+            event.preventDefault();
+            swalWithBootstrapButtons.fire({
+                title: 'آیا از حذف کردن این آیتم مطمئن هستید ؟؟',
+                text: "امکام بازگردانی ایتم حذف شده وجود ندارد",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'حذف',
+                cancelButtonText: 'بازگشت',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var btnId = id;
+                    Loader.open();
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: '@Url.Action("Delete")',
+                        data: { id: btnId },
+                        success: (response) => {
+
+                            if (response.status === 200) {
+                                swalWithBootstrapButtons.fire(
+                                    'آیتم مورد نظر حذف گردید',
+                                    '',
+                                    'success'
+                                );
+                                $("#table_" + id).fadeOut();
+                            }
+                            else {
+                                swalWithBootstrapButtons.fire(
+                                    'خطا',
+                                    response.message,
+                                    'error'
+                                );
+                            }
+                        },
+                        error: (e) => {
+                            swalWithBootstrapButtons.fire(
+                                'خطا',
+                                e.message,
+                                'error'
+                            );
+                        },
+                        complete: function () {
+                            Loader.close();
+                        }
+                    });
+                }
+            });
+        };
+
+
+    </script>
+    <script>
+        function changeTake(e) {
+            $("#pageId").val(1);
+            $("#Filter_Take").val($(e).val());
+            $("#subForm").submit();
+        }
+        function ArrowPage(pageId) {
+            var currentPage = @Model.PagingHandler.ActivePage;
+            currentPage += pageId;
+            SetPage(currentPage);
+        }
+        function SetPage(id) {
+            $("#pageId").val(id);
+            $("#subForm").submit();
+        }
+    </script>
+}
+

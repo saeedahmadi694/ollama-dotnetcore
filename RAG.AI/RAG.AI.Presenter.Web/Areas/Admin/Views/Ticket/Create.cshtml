@@ -1,0 +1,96 @@
+﻿@using RAG.AI.Application.Commands.Tickets.TicketDiscussions.CreateAdminTicketDiscussion
+@model CreateAdminTicketDiscussionCommand;
+
+
+<link href="/util/fileuploads/css/dropify.css" rel="stylesheet" />
+
+
+<form id="form" class="bg-light">
+    <input type="hidden" asp-for="TicketId" />
+
+
+    <div class="form-group col-md-12">
+        <label>
+            <span style="font-size:12px">انتخاب فایل</span>
+        </label>
+
+        <div class="dropify-loader">
+        </div>
+        <div class="dropify-errors-container">
+            <ul>
+            </ul>
+        </div>
+        <input asp-for="File" type="file" class="dropify" multiple>
+
+        <div class="dropify-preview">
+            <span class="dropify-render"></span>
+            <div class="dropify-infos">
+                <div class="dropify-infos-inner">
+                    <p class="dropify-filename">
+                        <span class="file-icon"></span>
+                        <span class="dropify-filename-inner"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <input asp-for="Answer" placeholder="پیام را بنوسید" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+        <div class="input-group-append">
+            <button id="button-addon2" type="submit" class="btn btn-link submitBtn"> <i class="fa fa-paper-plane"></i></button>
+        </div>
+        <span asp-validation-for="Answer" class="text-danger"></span>
+
+    </div>
+</form>
+
+
+
+<partial name="_ValidationScriptsPartial" />
+<script src="/util/fileuploads/js/dropify.min.js"></script>
+
+<script>
+
+
+    $('.dropify').dropify({
+        messages: {
+            'default': 'فایل را به اینجا بکشید یا کلیک کنید',
+            'replace': 'برای جایگزینی فایل را به اینجا بکشید یا کلیک کنید',
+            'remove': 'پاک کردن',
+            'error': 'با پوزش فراوان، خطایی رخ داده'
+        },
+        error: {
+            'fileSize': 'حجم فایل بیشتر از حد مجاز است (1M).'
+        }
+    });
+    $("#form").on('submit', function (e) {
+
+        e.preventDefault();
+        if ($("#form").valid() === false) return;
+        $(".submitBtn").prop('disabled', true);
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            method: 'POST',
+            url: '@Url.Action("Create")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                var result = response;
+
+                toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                location.reload();
+                $(".submitBtn").prop('disabled', false);
+            },
+            error: function () {
+
+                var result = e;
+                $(".submitBtn").prop('disabled', true);
+                toastr.error(result.message, 'خطا');
+            }
+        });
+    });
+</script>
+

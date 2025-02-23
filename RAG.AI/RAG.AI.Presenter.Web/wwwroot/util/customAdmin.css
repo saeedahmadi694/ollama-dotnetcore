@@ -1,0 +1,316 @@
+﻿
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    src: url(fonts/IRANSansWeb.ttf);
+}
+
+.filter-option-inner-inner {
+    float: right !important;
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 49px;
+    height: 22px;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+ion-row.content-boxes ion-col {
+    --ion-grid-column-padding: 0;
+}
+
+ion-row.content-boxes self:not(:last-child, .no-paddding) {
+    padding-bottom: 24px;
+}
+
+    ion-row.content-boxes self:not(:last-child, .no-paddding):not(.no-border) {
+        border-bottom: 1px solid var(--ion-color-gray-2);
+    }
+
+ion-row.content-boxes .main-title > ion-title, ion-row.content-boxes .main-title > ion-card-subtitle {
+    padding-inline: 0;
+    width: 149px;
+    margin-left: 5px;
+}
+
+ion-row.content-boxes .main-title > ion-title {
+    font-size: 16px;
+    text-align: right;
+}
+
+ion-row.content-boxes .card {
+    background: white;
+    padding: 32px 32px 24px;
+    border-radius: 8px;
+}
+
+    ion-row.content-boxes .card:not(.no-flex) {
+        display: flex;
+    }
+
+    ion-row.content-boxes .card .info {
+        display: flex;
+        gap: 8px;
+    }
+
+        ion-row.content-boxes .card .info ion-title {
+            padding-inline: 0;
+            text-align: right;
+        }
+
+.chip {
+    padding: 3px 12px !important;
+}
+
+ion-button:not(.default) {
+    height: 38px !important;
+    min-width: 125px;
+    --border-radius: 8px;
+    --border-width: 1px;
+}
+
+.overview-box {
+    background: var(--ion-color-gray-1, #f3f5f8);
+    border-radius: 8px;
+    min-width: 624px;
+    min-height: 102px;
+    display: flex;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.overview-box_price {
+    width: 211px !important;
+    height: 100%;
+    border-left: 1px solid var(--ion-color-gray-2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+    .overview-box_price .price {
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 40px;
+    }
+
+.overview-box_info {
+    flex-grow: 1;
+    padding-right: 20px;
+}
+
+    .overview-box_info ion-grid {
+        flex-grow: 1;
+        padding: 15;
+        background-color: var(--ion-color-gray-1);
+        border-radius: 8px;
+    }
+
+        .overview-box_info ion-grid ion-col {
+            line-height: 40px;
+        }
+
+div.bullet-tag {
+    position: relative;
+    vertical-align: middle;
+    color: var(--ion-color-gray-6);
+}
+
+    div.bullet-tag span {
+        /*width: 10px;
+        height: 10px;*/
+        border-radius: 50%;
+        right: 0;
+        top: 50%;
+        display: inline-block;
+        background-color: var(--ion-color-primary);
+    }
+
+    div.bullet-tag b {
+        color: var(--ion-color-gray-8);
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+.customer-info > ion-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    text-align: right;
+}
+
+    .customer-info > ion-col:last-child {
+        flex-direction: row;
+    }
+
+    .customer-info > ion-col:not(:first-child) {
+        padding-right: 49px;
+    }
+
+    .customer-info > ion-col:not(:last-child) {
+        border-left: 1px solid var(--ion-color-gray-2);
+    }
+
+    .customer-info > ion-col ion-label {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 160%;
+    }
+
+    .customer-info > ion-col ion-text {
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+.post-info > ion-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    text-align: right;
+}
+
+    .post-info > ion-col:last-child {
+        flex-direction: row;
+        justify-content: end;
+    }
+
+    .post-info > ion-col:not(:first-child) {
+        padding-right: 49px;
+    }
+
+    .post-info > ion-col:not(:last-child) {
+        border-left: 1px solid var(--ion-color-gray-2);
+    }
+
+    .post-info > ion-col ion-label {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 160%;
+    }
+
+    .post-info > ion-col ion-text {
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+.content-boxes.purchase > .card {
+    flex-direction: column;
+}
+
+    .content-boxes.purchase > .card > .purchase-itmes {
+        gap: 24px;
+    }
+
+        .content-boxes.purchase > .card > .purchase-itmes self:not(:last-child, .no-border) {
+            padding-bottom: 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--ion-color-gray-2);
+        }
+
+.purchase-itmes_book-image > ion-img::part(image) {
+    width: 101px;
+    height: 146px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px 0px rgba(9, 99, 97, 0.06), 0px 1px 3px 0px rgba(9, 99, 97, 0.1);
+}
+
+.purchase-itmes_book-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+    .purchase-itmes_book-info .price-section {
+        display: flex;
+        align-items: center;
+    }
+
+        .purchase-itmes_book-info .price-section ion-title {
+            padding-inline: 0;
+            margin-right: 24px;
+            display: flex;
+            gap: 2px;
+        }
+
+        .purchase-itmes_book-info .price-section > ion-label:not(:last-child) {
+            padding-left: 27px;
+            margin-left: 27px;
+            border-left: 1px solid var(--ion-color-gray-2);
+        }
+
+.textarea-fill-outline {
+    border: 1px solid var(--ion-color-gray8);
+}
+
+ion-fab-button {
+    --box-shadow: none;
+}
+
+.purchase-type {
+    background-color: #e7f6f6;
+    color: #0c8481;
+}
+
+
+jdp-container {
+    z-index:2000 !important;
+}

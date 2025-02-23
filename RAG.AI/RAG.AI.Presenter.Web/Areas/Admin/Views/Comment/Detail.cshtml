@@ -1,0 +1,39 @@
+﻿@using RAG.AI.Application.Queries.ContactMessages.GetContactMessageDetail
+@using RAG.AI.Infrastructure.Dtos.ContactMessages
+@model ContactMessageDto
+@{
+    ViewData["Title"] = "پیام";
+}
+
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"]
+        </h4>
+
+    </div>
+    <div class="card-body">
+
+        <form role="form" id="form" enctype="multipart/form-data">
+            <input asp-for="Id" type="hidden">
+
+            <div class="row">
+
+                <div class="form-group  col-12">
+                    <p>@Model.Message</p>
+                </div>
+
+            </div>
+
+        </form>
+
+
+        <br>
+    </div>
+</div>
+
+
+
+
+

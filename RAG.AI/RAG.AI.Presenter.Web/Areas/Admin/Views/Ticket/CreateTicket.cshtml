@@ -1,0 +1,150 @@
+﻿@using RAG.AI.Application.Commands.Tickets.CreateTicket
+@using RAG.AI.Presenter.Web.Areas.Admin.ViewModels.TicketViewModels
+@model CreateTicketViewModel
+
+
+<link href="/util/fileuploads/css/dropify.css" rel="stylesheet" />
+
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"]
+        </h4>
+
+    </div>
+    <div class="card-body">
+
+
+        <form role="form" id="form" enctype="multipart/form-data">
+
+            <input type="hidden" asp-for="Command.UserId" />
+            <div class="panel-body row">
+                <div></div>
+
+                <div class="form-group col-md-4">
+                    <label class="text-right ">عنوان</label>
+                    <input asp-for="Command.Topic" class="form-control" />
+                    <span asp-validation-for="Command.Topic" class="text-danger"></span>
+
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    <label>
+                        دسته بندی
+                    </label>
+                    <select class="form-control" asp-for="Command.CategoryId">
+                        <option value="" selected disabled> انتخاب کنید</option>
+                        @foreach (var item in Model.Categories)
+                        {
+                            <option value="@item.Id">@item.Title</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label>
+                        <span style="font-size:12px">انتخاب عکس</span>
+                    </label>
+
+                    <div class="dropify-loader">
+                    </div>
+                    <div class="dropify-errors-container">
+                        <ul>
+                        </ul>
+                    </div>
+                    <input asp-for="Command.File" type="file" class="dropify">
+
+                    <div class="dropify-preview">
+                        <span class="dropify-render"></span>
+                        <div class="dropify-infos">
+                            <div class="dropify-infos-inner">
+                                <p class="dropify-filename">
+                                    <span class="file-icon"></span>
+                                    <span class="dropify-filename-inner"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span asp-validation-for="Command.File" class="text text-danger mb-2"></span>
+
+                </div>
+
+
+
+
+                <div class=" form-group col-md-12 col-12">
+                    <label class="">توضیحات :</label>
+                    <textarea class="form-control" asp-for="Command.Body" type="text"></textarea>
+                </div>
+                <span asp-validation-for="Command.Body" class="text text-danger mb-2"></span>
+
+
+                <button type="submit" class="btn btn-success mx-1 submitBtn">ایجاد</button>
+                <a href="@Url.Action("Index")" class="btn btn-danger mx-1">بازگشت</a>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+
+
+        <br>
+    </div>
+</div>
+
+
+
+<partial name="_ValidationScriptsPartial" />
+<script src="/util/fileuploads/js/dropify.min.js"></script>
+<script>
+
+
+    $('.dropify').dropify({
+        messages: {
+            'default': 'فایل را به اینجا بکشید یا کلیک کنید',
+            'replace': 'برای جایگزینی فایل را به اینجا بکشید یا کلیک کنید',
+            'remove': 'پاک کردن',
+            'error': 'با پوزش فراوان، خطایی رخ داده'
+        },
+        error: {
+            'fileSize': 'حجم فایل بیشتر از حد مجاز است (1M).'
+        }
+    });
+
+
+
+    $("#form").on('submit', function (e) {
+
+        e.preventDefault();
+        if ($("#form").valid() === false) return;
+        $(".submitBtn").prop('disabled', true);
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            method: 'POST',
+            url: '@Url.Action("CreateTicket")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                var result = response;
+
+                    toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                    $("#myModal").modal('hide');
+            
+            },
+            error: function () {
+                var result = $.parseJSON(e);
+                $(".submitBtn").prop('disabled', true);
+                toastr.error(result.message, 'خطا');
+            }
+        });
+    });
+
+
+
+</script>
+
+
+

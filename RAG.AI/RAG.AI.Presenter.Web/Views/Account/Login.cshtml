@@ -1,0 +1,95 @@
+﻿@using RAG.AI.Application.Commands.Users.Login;
+@model LogInCommand
+
+@{
+    ViewData["Title"] = "ورود";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="auth-box">
+    <div id="loginform">
+        <!-- Form -->
+        <div class="row" style="direction: rtl">
+            <div class="col-12">
+
+                <form  asp-action="Login" asp-controller="Account" id="LoginForm">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control form-control-lg" asp-for="LoginParameter" placeholder="موبایل" aria-label="LoginParameter" aria-describedby="basic-addon1">
+                    </div>
+                    <span asp-validation-for="LoginParameter" class="text text-danger mb-2 float-right"></span>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
+                        </div>
+                        <input type="Password" class="form-control form-control-lg" asp-for="Password" placeholder="رمز عبور" aria-label="Password" aria-describedby="basic-addon1">
+                    </div>
+                    <span asp-validation-for="Password" class="text text-danger mb-2 float-right"></span>
+
+                    <input type="hidden" id="g-recaptcha-response" name="token">
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class=" custom-checkbox">
+                                <input type="checkbox">
+                                <label class="font-I" for="">مرا به خاطر بسپار</label>
+                                @*<a href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-l-5"></i>فراموشی رمز عبور</a>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <div class="col-xs-12 p-b-20">
+                            <button class="btn btn-block btn-lg btn-info" type="submit">ورود</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+@section Script
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        $("#LoginForm").on('submit', function (e) {
+
+            e.preventDefault();
+            // if ($("#form").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                method: 'POST',
+                url: '@Url.Action("Login")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let result = response
+                    toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                    location.href="/admin/home"
+                },
+                error: function (e) {
+                    toastr.error('نام کاربری یا کلمه عبور اشتباه است', 'خطا');
+                }
+            });
+        });
+
+
+    </script>
+}
+
+

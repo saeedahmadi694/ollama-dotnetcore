@@ -1,0 +1,216 @@
+﻿@using RAG.AI.Infrastructure.Dtos.Tickets
+@using RAG.AI.Infrastructure.Extentions
+@using RAG.AI.Infrastructure.Extentions.Localizations
+@model GetTicketDetailForAdminDto
+@{
+    ViewData["Title"] = Model.Topic;
+}
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"]
+        </h4>
+        <div>
+            <a href="@Url.Action("Index")" class="btn btn-danger">بازگشت</a>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class=" col-4 form-group">
+                <label class="control-label col-md-4 col-sm-12 col-12 ">
+                    عنوان
+                </label>
+                <input type="text" disabled asp-for="Topic" class="form-control" />
+            </div>
+
+            <div class=" col-4 form-group">
+                <label class="control-label col-md-4 col-sm-12 col-12 ">
+                    وضعیت
+                </label>
+                <input type="text" disabled value="@LocalizationSource.L(Model.Status.Name)" class="form-control" />
+            </div>
+
+
+
+            <div class=" col-4 form-group">
+                <label class="control-label col-md-4 col-sm-12 col-12 ">
+                    تاریخ بستن
+                </label>
+                <input type="text" disabled value="@Model.CloseTime.ToShamsi()" class="form-control" />
+            </div>
+
+
+
+
+            <div class="col-12 px-0">
+
+                <div class="card-header bg-dark d-flex justify-content-between">
+                    <h4 class="m-b-0 text-white">
+                        پیام های کاربر
+                    </h4>
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        @if (!Model.Status.IsClosed)
+                        {
+                            <div class="dropdown-menu px-3" aria-labelledby="dropdownMenuButton">
+                                <a onclick="closeTicket()" href="javascript:void(0)" class="btn btn-danger btn-rounded mb-3 btn-block"> بستن پیام</a>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class=" chat-box bg-white" dir="ltr">
+                        <!-- Sender Message-->
+                        @if (Model.IsCreatedByAdmin)
+                        {
+
+                            <!-- Reciever Message-->
+                            <div class="media w-50 mr-auto mb-3">
+                                <div class="media-body">
+                                    <div class="bg-primary rounded py-2 px-3 mb-2">
+                                        <p class="text-small mb-4 text-white">@Model.Body</p>
+                                        <div>
+                                            @foreach (var file in Model.Files)
+                                            {
+                                                <a class="btn btn-success btn-sm" href="/GetFile/@AwsFolder.Ticket/@file.FileAddress" download="@file.FileAddress">دانلود فایل ضمیمه</a>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <p class="small text-muted">@Model.CreationTime.ToShamsi("yyyy/MM/dd", true)</p>
+                                </div>
+                            </div>
+
+
+                        }
+                        else
+                        {
+
+                            <!-- Sender Message-->
+                            <div class="media w-50 mb-3">
+                                <div class="media-body ml-3">
+                                    <div class="bg-light rounded py-2 px-3 mb-2">
+                                        <p class="text-small mb-4 text-dark">
+                                            @Model.Body
+                                        </p>
+
+                                        <div>
+                                            @foreach (var file in Model.Files)
+                                            {
+                                                <a class="btn btn-success btn-sm" href="/GetFile/@AwsFolder.Ticket/@file.FileAddress" download="@file.FileAddress">دانلود فایل ضمیمه</a>
+                                            }
+
+                                        </div>
+
+                                    </div>
+                                    <p class="small text-muted">@Model.CreationTime.ToShamsi("yyyy/MM/dd", true)</p>
+                                </div>
+                            </div>
+                        }
+                        @foreach (var item in Model.Discussions)
+                        {
+
+                            @if (item.ResponderId == Model.UserId)
+                            {
+                                <!-- Sender Message-->
+                                <div class="media w-50 mb-3">
+                                    <div class="media-body ml-3">
+                                        <div class="bg-light rounded py-2 px-3 mb-2">
+                                            <p class="text-small mb-4 text-dark">
+                                                @item.Answer
+                                            </p>
+
+                                            <div>
+                                                @foreach (var file in item.Files)
+                                                {
+                                                    <a class="btn btn-success btn-sm" href="/GetFile/@AwsFolder.Ticket/@file.FileAddress" download="@file.FileAddress">دانلود فایل ضمیمه</a>
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                        <p class="small text-muted">@item.CreationTime.ToShamsi("yyyy/MM/dd", true)</p>
+                                    </div>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <!-- Reciever Message-->
+                                <div class="media w-50 mr-auto mb-3">
+                                    <div class="media-body">
+                                        <div class="bg-primary rounded py-2 px-3 mb-2">
+                                            <p class="text-small mb-4 text-white">@item.Answer</p>
+                                            <div>
+                                                @foreach (var file in item.Files)
+                                                {
+                                                    <a class="btn btn-success btn-sm" href="/GetFile/@AwsFolder.Ticket/@file.FileAddress" download="@file.FileAddress">دانلود فایل ضمیمه</a>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <p class="small text-muted">@item.CreationTime.ToShamsi("yyyy/MM/dd", true)</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+
+
+
+                    </div>
+                    @if (!Model.Status.IsClosed)
+                    {
+                        <div id="message-box"></div>
+                    }
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="clearfix"></div>
+    </div>
+
+
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        $("#message-box").load('@Url.Action("Create", new { id = Model.Id })');
+        function closeTicket() {
+            $.ajax({
+                method: 'PATCH',
+                url: '@Url.Action("CloseTicket")',
+                data: { id: @Model.Id},
+                success: function (response) {
+                    var result = response;
+
+                    toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                    location.reload();
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function () {
+
+                    var result = e;
+                    $(".submitBtn").prop('disabled', true);
+                    toastr.error(result.message, 'خطا');
+                }
+            });
+        }
+    </script>
+}

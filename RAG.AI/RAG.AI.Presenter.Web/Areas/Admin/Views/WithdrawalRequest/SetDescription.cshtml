@@ -1,0 +1,81 @@
+﻿@using RAG.AI.Application.Commands.WithdrawalRequests.SetWithdrawalRequestDesription
+
+@model SetWithdrawalRequestDesriptionCommand
+@{
+    ViewData["Title"] = "یادداشت";
+}
+
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"]
+        </h4>
+
+    </div>
+    <div class="card-body">
+
+        <form role="form" id="form" enctype="multipart/form-data">
+            <input asp-for="Id" type="hidden">
+
+            <div class="row">
+
+                <div class="form-group  col-12">
+                    <label for="title"> توضیحات</label>
+                    <textarea asp-for="Description" type="text" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text text-danger mb-2"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mx-1 submitBtn">ثبت</button>
+            <div class="clearfix"></div>
+        </form>
+
+
+        <br>
+    </div>
+</div>
+
+
+<partial name="_ValidationScriptsPartial" />
+<script>
+
+    $("#form").on('submit', function (e) {
+
+        e.preventDefault();
+        if ($("#form").valid() === false) return;
+        $(".submitBtn").prop('disabled', true);
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            method: 'PATCH',
+            url: '@Url.Action("SetDescription")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                let result = response
+                if (result.status === 422) {
+                    $(".submitBtn").prop('disabled', false);
+                    toastr.warning(result.message);
+                    return;
+                }
+                toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                $("#myModal").modal('hide');
+
+                $(".submitBtn").prop('disabled', false);
+            },
+            error: function (e) {
+                    $(".submitBtn").prop('disabled', false);
+                    toastr.error(e.responseJSON.detail, 'خطا');
+            }
+        });
+    });
+
+
+
+</script>
+
+
+
+

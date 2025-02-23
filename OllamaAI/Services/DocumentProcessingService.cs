@@ -33,7 +33,7 @@ public class DocumentProcessingService : IDocumentProcessingService
             await ExtractContentAsync(filePath, extension);
 
 
-            await GenerateEmbeddingsAsync(filePath);
+            //await GenerateEmbeddingsAsync(filePath);
 
             // Enqueue content extraction job
             //var jobId = _backgroundJobClient.Enqueue<IDocumentProcessingService>(
@@ -152,7 +152,7 @@ public class DocumentProcessingService : IDocumentProcessingService
     private async Task<string> ExtractFromCsv(string filePath)
     {
         var text = new StringBuilder();
-        using (var reader = new StreamReader(filePath))
+        using (var reader = new StreamReader(filePath, Encoding.UTF8))
         {
             while (!reader.EndOfStream)
             {

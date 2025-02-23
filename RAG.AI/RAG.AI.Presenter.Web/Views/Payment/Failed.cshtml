@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "پرداخت ناموفق";
+}
+
+@*<div class="container success-container m-3 p-0">
+    <div class="row">
+        <div class="d-flex flex-row justify-content-center">
+            <div class="col-md-12 col-lg-6 col-sm-12 px-1">
+                <img src="~/image/error_payment.svg" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex flex-row justify-content-center">
+            <h4>پرداخت با موفقیت انجام نشد</h4>
+        </div>
+        <div class="d-flex flex-row justify-content-center">
+            <p>در صورت کسر مبلغ از حساب شما، مبلغ کسر شده حداکثر تا 72 ساعت دیگر به حساب شما بر خواهد گشت</p>
+        </div>
+        <div class="d-flex flex-row justify-content-center">
+            <p><bdi>کد پیگیری: @ViewBag.FollowCode</bdi> </p>
+        </div>
+        <div class="d-flex flex-row justify-content-center">
+            <a class="btn btn-primary success-button text-center" href="@ViewBag.RedirectUrl">
+                برگشت به سامانه
+            </a>
+        </div>
+    </div>
+</div>*@
+
+<div class="row mt-5">
+    <div class="d-flex flex-row text-center">
+        <div class="col-md-12 col-lg-6 col-sm-12 px-1 text-center">
+            <img src="image/error_payment.svg" />
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="d-flex flex-row justify-content-center mt-4">
+            <h6>پرداخت با موفقیت انجام نشد</h6>
+        </div>
+        <div class="text-center failed">
+            <p>در صورت کسر مبلغ از حساب شما، مبلغ کسر شده حداکثر تا 72 ساعت دیگر به حساب شما بر خواهد گشت</p>
+        </div>
+        <div class="d-flex flex-row justify-content-center">
+            <p><small>کد پیگیری: </small><b>@ViewBag.FollowCode</b> </p>
+        </div>
+        <div class="d-flex flex-row justify-content-center mt-4">
+            <a class="btn btn-outline-success text-center ps-4 pe-4 pt-2 pb-2" href="@ViewBag.RedirectUrl">
+                برگشت به سامانه
+            </a>
+        </div>
+    </div>
+</div>

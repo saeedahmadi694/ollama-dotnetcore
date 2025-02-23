@@ -1,0 +1,152 @@
+﻿@using RAG.AI.Application.Commands.Products.Frames.EditFrame
+@model EditFrameCommand
+@{
+    ViewData["Title"] = "ویرایش قالب";
+}
+@section Plugins
+{
+    <link href="/util/fileuploads/css/dropify.css" rel="stylesheet" />
+}
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"]
+        </h4>
+
+    </div>
+    <div class="card-body">
+
+        <form role="form" id="form" enctype="multipart/form-data">
+            <input asp-for="Id" type="hidden">
+
+            <div class="row">
+                <div class="form-group col-md-4 col-12">
+                    <label for="title">عنوان</label>
+                    <input asp-for="Title" type="text" class="form-control">
+                    <span asp-validation-for="Title" class="text text-danger mb-2"></span>
+                </div>
+                <div class="form-group col-md-4 col-12">
+                    <label for="title">وزن</label>
+                    <input asp-for="Weight" type="number" class="form-control">
+                    <span asp-validation-for="Weight" class="text text-danger mb-2"></span>
+                </div>
+
+                <div class="form-group col-md-4 col-12">
+                    <label for="title"> تعداد</label>
+                    <input asp-for="Quantity" type="number" class="form-control">
+                    <span asp-validation-for="Quantity" class="text text-danger mb-2"></span>
+                </div>
+
+
+                <div class="form-group col-12">
+
+                    <div class="panel panel-custom panel-border">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">انتخاب عکس</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div>
+                            </div>
+                            <div class="dropify-loader">
+                            </div>
+                            <div class="dropify-errors-container">
+                                <ul>
+                                </ul>
+                            </div>
+                            <input asp-for="ImageFile" type="file" class="dropify" data-default-file="/GetFile/@AwsFolder.Product/@Model.ImageAddress">
+
+                            <div class="dropify-preview">
+                                <span class="dropify-render"></span>
+                                <div class="dropify-infos">
+                                    <div class="dropify-infos-inner">
+                                        <p class="dropify-filename">
+                                            <span class="file-icon"></span>
+                                            <span class="dropify-filename-inner"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group  col-12">
+                    <label for="title"> توضیحات</label>
+                    <textarea asp-for="Description" type="text" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text text-danger mb-2"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-warning mx-1 submitBtn">ویرایش</button>
+            <a href="@Url.Action("Frames")" class="btn btn-danger mx-1">بازگشت</a>
+            <div class="clearfix"></div>
+        </form>
+
+
+        <br>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="/util/fileuploads/js/dropify.min.js"></script>
+    <script>
+
+        $('.dropify').dropify({
+            messages: {
+                'default': 'فایل را به اینجا بکشید یا کلیک کنید',
+                'replace': 'برای جایگزینی فایل را به اینجا بکشید یا کلیک کنید',
+                'remove': 'پاک کردن',
+                'error': 'با پوزش فراوان، خطایی رخ داده'
+            },
+            error: {
+                'fileSize': 'حجم فایل بیشتر از حد مجاز است (1M).'
+            }
+        });
+        $("#form").on('submit', function (e) {
+
+            e.preventDefault();
+            if ($("#form").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                method: 'PUT',
+                url: '@Url.Action("EditFrame")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let result = response
+
+                    // if (result.status === 422) {
+                    //     $(".submitBtn").prop('disabled', false);
+                    //     toastr.warning(result.message);
+                    //     return;
+                    // }
+                    toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                    location.href = '@Url.Action("Frames")'
+
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function (e) {
+                    $(".submitBtn").prop('disabled', false);
+                    toastr.error(e.responseJSON.detail, 'خطا');
+                }
+            });
+        });
+
+
+
+    </script>
+}
+
+
+
+

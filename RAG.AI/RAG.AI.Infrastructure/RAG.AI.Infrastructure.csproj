@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="ExternalServices\TGJU\**" />
+		<EmbeddedResource Remove="ExternalServices\TGJU\**" />
+		<None Remove="ExternalServices\TGJU\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Extentions\Attributes\UserAuthorizationAttribute.cs" />
+		<Compile Remove="Extentions\PublisheEndpointExtentions.cs" />
+		<Compile Remove="Extentions\UserDetailCache.cs" />
+		<Compile Remove="ExternalServices\UserDetailModel.cs" />
+		<Compile Remove="Utilities\OperationLockManager.cs" />
+		<Compile Remove="Utilities\PrefixNameFormatter.cs" />
+		<Compile Remove="Utilities\StackExchangeRedisCache.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Extentions\Localizations\Localization.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Extentions\Localizations\Localization.xml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\RAG.AI.Domain\RAG.AI.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Extentions\Adapters\" />
+		<Folder Include="Extentions\Attributes\" />
+		<Folder Include="FileManager\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AWSSDK.S3" Version="3.7.405.11" />
+		<PackageReference Include="BookHouse.Core.Utilities" Version="1.0.81" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Serilog" Version="4.1.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+		<PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+		<PackageReference Include="Serilog.Sinks.Graylog" Version="3.1.1" />
+		<PackageReference Include="MD.PersianDateTime" Version="4.5.0" />
+		<PackageReference Include="Microsoft.Extensions.AI.Ollama" Version="9.0.1-preview.1.24570.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1" />
+		<PackageReference Include="Microsoft.SemanticKernel" Version="1.38.0" />
+		<PackageReference Include="Microsoft.SemanticKernel.Abstractions" Version="1.38.0" />
+		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.32.0-alpha" />
+		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Qdrant" Version="1.32.0-preview" />
+		<PackageReference Include="PdfPig" Version="0.1.9" />
+	</ItemGroup>
+
+</Project>
+
+
+

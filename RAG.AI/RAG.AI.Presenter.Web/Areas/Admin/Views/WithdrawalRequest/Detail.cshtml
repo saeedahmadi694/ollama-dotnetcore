@@ -1,0 +1,196 @@
+﻿@using RAG.AI.Infrastructure.Dtos.WithdrawalRequests
+@using RAG.AI.Infrastructure.Extentions
+@using RAG.AI.Infrastructure.Extentions.Localizations
+@model WithdrawalRequestDto
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            اطلاعات درخواست برداشت
+        </h4>
+        <div class="dropdown">
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-6 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    موبایل
+                </label>
+                <input type="text" disabled asp-for="Mobile" class="form-control">
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    نام و نام خانوادگی
+                </label>
+                <input type="text" disabled asp-for="FullName" class="form-control">
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    مبلغ درخواست
+                </label>
+                <input type="text" disabled value="@Model.Amount.ToString("N0") تومان" class="form-control">
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    درصد کارمزد
+                </label>
+                <input type="text" disabled value="@Model.WagePercent%" class="form-control">
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    مبلغ نهایی
+                </label>
+                <input type="text" disabled value="@Model.FinalAmount.ToString("N0") تومان" class="form-control">
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    نوع درخواست
+                </label>
+                <input type="text" disabled value="@LocalizationSource.L(Model.RequestType.Name)" class="form-control">
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    وضعیت درخواست
+                </label>
+                <input type="text" disabled value="@LocalizationSource.L(Model.Status.Name)" class="form-control">
+            </div>
+
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    توضیحات
+                </label>
+                <textarea type="text" disabled asp-for="Description" class="form-control"></textarea>
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12">
+                    تاریخ ایجاد درخواست
+                </label>
+                <input type="text" disabled value="@Model.CreationTime.ToShamsi()" class="form-control">
+            </div>
+
+            @if (Model.GoldBackRequest != null)
+            {
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12">
+                        تاریخ آماده تحویل
+                    </label>
+                    <input type="text" disabled value="@Model.GoldBackRequest.ReadyDeliverDate?.ToShamsi()" class="form-control">
+                </div>
+
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12">
+                        مقدار تحویل داده‌شده
+                    </label>
+                    <input type="text" disabled value="@Model.GoldBackRequest.DeliveredAmount?.ToString("N0") گرم" class="form-control">
+                </div>
+
+                @if (Model.GoldBackRequest?.Product != null)
+                {
+                    <div class="col-md-6 col-12 form-group">
+                        <label class="control-label col-md-12 col-sm-12 col-12">
+                            نام محصول
+                        </label>
+                        <input type="text" disabled value="@Model.GoldBackRequest.Product.Title" class="form-control">
+                    </div>
+
+                    <div class="col-md-6 col-12 form-group">
+                        <label class="control-label col-md-12 col-sm-12 col-12">
+                            وزن محصول
+                        </label>
+                        <input type="text" disabled value="@Model.GoldBackRequest.Product.Weight.ToString("N2") گرم" class="form-control">
+                    </div>
+
+                    <div class="col-md-6 col-12 form-group">
+                        <label class="control-label col-md-12 col-sm-12 col-12">
+                            موجودی محصول
+                        </label>
+                        <input type="text" disabled value="@Model.GoldBackRequest.Product.Quantity عدد" class="form-control">
+                    </div>
+
+                    <div class="col-md-6 col-12 form-group">
+                        <label class="control-label col-md-12 col-sm-12 col-12">
+                            وضعیت محصول
+                        </label>
+                        <input type="text" disabled value="@(Model.GoldBackRequest.Product.IsActive ? "فعال" : "غیرفعال")" class="form-control">
+                    </div>
+
+
+                    @* 
+                    @if (Model.InPersonRequest.Product.Bullion != null)
+                    {
+                        <div class="col-md-12 col-12 form-group">
+                            <label class="control-label col-md-12 col-sm-12 col-12">
+                                نوع شمش
+                            </label>
+                            <input type="text" disabled value="@Model.InPersonRequest.Product.Bullion.Type" class="form-control">
+                        </div>
+
+                        <div class="col-md-12 col-12 form-group">
+                            <label class="control-label col-md-12 col-sm-12 col-12">
+                                عیار شمش
+                            </label>
+                            <input type="text" disabled value="@Model.InPersonRequest.Product.Bullion.Purity.ToString("N2")" class="form-control">
+                        </div>
+                    } *@
+                }
+
+            }
+
+            @if (Model.CashBackRequest != null)
+            {
+
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12">
+                        مبلغ بازگشت وجه
+                    </label>
+                    <input type="text" disabled value="@Model.CashBackRequest.Amount.ToString("N0") تومان" class="form-control">
+                </div>
+
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12">
+                        صاحب حساب
+                    </label>
+                    <input type="text" disabled value="@Model.CashBackRequest.AccountOwner" class="form-control">
+                </div>
+
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12">
+                        شماره کارت
+                    </label>
+                    <input type="text" disabled value="@Model.CashBackRequest.CardNumber" class="form-control">
+                </div>
+
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12">
+                        شماره شبا
+                    </label>
+                    <input type="text" disabled value="@Model.CashBackRequest.Iban" class="form-control">
+                </div>
+
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12">
+                        بانک
+                    </label>
+                    <input type="text" disabled value="@LocalizationSource.L(Model.CashBackRequest.Bank.ToString())" class="form-control">
+                </div>
+
+                <div class="col-md-6 col-12 form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-12">
+                        تاریخ پرداخت
+                    </label>
+                    <input type="text" disabled value="@Model.CashBackRequest.PaymentDate?.ToShamsi()" class="form-control">
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

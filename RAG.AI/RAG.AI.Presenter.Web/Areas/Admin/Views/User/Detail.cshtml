@@ -1,0 +1,184 @@
+﻿@using RAG.AI.Infrastructure.Dtos.Users
+@using RAG.AI.Infrastructure.Extentions
+@using RAG.AI.Presenter.Web.Areas.Admin.ViewModels.UserViewModels
+@model UserDetailViewModel
+
+
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @Model.user.FullName
+        </h4>
+        <div class="dropdown">
+            @*    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+            </button>
+            <div class="dropdown-menu px-3" aria-labelledby="dropdownMenuButton">
+            <a asp-action="ExportUsers" class="btn btn-primary btn-rounded mb-3 btn-block"><i class="fa fa-file-excel"></i> خروجی</a>
+            </div> *@
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                    موبایل
+                </label>
+                <input type="text" disabled asp-for="user.Mobile" class="form-control">
+            </div>
+
+            @*          <div class="col-md-12 col-12 form-group">
+            <label class="control-label col-md-12 col-sm-12 col-12 ">
+            ایمیل
+            </label>
+            <input type="text" disabled asp-for="user.Email" class="form-control">
+            </div> *@
+
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                    نام و نام خانوادگی
+                </label>
+                <input type="text" disabled asp-for="user.FullName" class="form-control">
+            </div>
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                    کد ملی
+                </label>
+                <input type="text" disabled asp-for="user.NationalCode" class="form-control">
+            </div>
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                    کد پستی
+                </label>
+                <input type="text" disabled asp-for="user.PostalCode" class="form-control">
+            </div>
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                    آدرس
+                </label>
+                <textarea type="text" disabled asp-for="user.Address" class="form-control"></textarea>
+            </div>
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                    سطح کاربری
+                </label>
+                <input type="text" disabled value="سطح 1" class="form-control">
+            </div>
+
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                    تاریخ تولد
+                </label>
+                <input type="text" disabled value="@Model.user.BirthDate.ToShamsi()" class="form-control">
+            </div>
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                    تاریخ ثبت نام
+                </label>
+                <input type="text" disabled value="@Model.user.CreationTime.ToShamsi()" class="form-control">
+            </div>
+            <div class="col-md-12 col-12 form-group">
+                <label class="control-label col-md-12 col-sm-12 col-12 ">
+                   کد معرف
+                </label>
+                <input type="text" disabled value="@Model.user.ReferralCode" class="form-control">
+            </div>
+
+            <div class="col-md-12 col-12 form-group">
+                <div class="row">
+                    <div class=" col-md-6  col-12 ">
+                        وضعیت کاربری
+                    </div>
+                    <div class=" col-md-6  col-12 text-right">
+                        <label class="switch">
+                            <input id="@Model.user.Id" type="checkbox" disabled class="checkBoxSaeed" checked="@Model.user.IsActive" value="@Model.user.IsActive">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-12 form-group">
+
+
+                <div class="table-responsive" style="min-height: 50vh">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    بانک
+                                </th>
+                                <th>
+                                    شماره شبا
+                                </th>
+                                <th>
+                                    شماره حساب
+                                </th>
+                                <th>
+                                    شماره کارت
+                                </th>
+                                <th>
+                                    وضعیت
+                                </th>
+                                <th>
+                                    تاریخ
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.PagingHandler.Items.Any())
+                            {
+                                @foreach (var item in Model.PagingHandler.Items)
+                                {
+                                    <tr id="table_@item.Id">
+                                        <td>
+                                            @item.Bank
+                                        </td>
+                                        <td>
+                                            @item.Iban
+                                        </td>
+                                        <td>
+                                            @item.DepositNumber
+                                        </td>
+                                        <td>
+                                            @item.CardNumber
+                                        </td>
+                                        <td>
+                                            <label class="switch">
+                                                <input id="@item.Id" disabled type="checkbox" class="checkBoxSaeed" checked="@item.IsActive" value="@item.IsActive">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            @item.CreationTime.ToShamsi()
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <p>رکوردی وجود ندارد</p>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

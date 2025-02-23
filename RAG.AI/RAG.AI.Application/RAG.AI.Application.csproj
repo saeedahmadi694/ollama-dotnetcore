@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Commands\CreateUser\**" />
+    <Compile Remove="Commands\FAQCategories\**" />
+    <Compile Remove="Commands\LoginWithImpersonationToken\**" />
+    <Compile Remove="Commands\SendEmail\**" />
+    <Compile Remove="Queries\FAQCategories\**" />
+    <EmbeddedResource Remove="Commands\CreateUser\**" />
+    <EmbeddedResource Remove="Commands\FAQCategories\**" />
+    <EmbeddedResource Remove="Commands\LoginWithImpersonationToken\**" />
+    <EmbeddedResource Remove="Commands\SendEmail\**" />
+    <EmbeddedResource Remove="Queries\FAQCategories\**" />
+    <None Remove="Commands\CreateUser\**" />
+    <None Remove="Commands\FAQCategories\**" />
+    <None Remove="Commands\LoginWithImpersonationToken\**" />
+    <None Remove="Commands\SendEmail\**" />
+    <None Remove="Queries\FAQCategories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\UserDetailModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RAG.AI.Infrastructure\RAG.AI.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BusConsumers\" />
+    <Folder Include="DomainEventHandlers\" />
+    <Folder Include="IntegrationEvents\EventHandling\" />
+    <Folder Include="IntegrationEvents\Events\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Serilog" Version="4.1.0" />
+  </ItemGroup>
+
+</Project>
+
+
+

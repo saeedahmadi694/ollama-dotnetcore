@@ -1,0 +1,95 @@
+﻿@using RAG.AI.Application.Commands.Operations.CreateCashWithdrawalOperation
+
+@model CreateCashWithdrawalOperationCommand
+@{
+    ViewData["Title"] = "برداشت پول";
+}
+
+
+<div class="card border-dark">
+    <div class="card-header bg-dark d-flex justify-content-between">
+        <h4 class="m-b-0 text-white">
+            @ViewData["Title"]
+        </h4>
+
+    </div>
+    <div class="card-body">
+
+        <form role="form" id="form" enctype="multipart/form-data">
+            <input asp-for="UserId" type="hidden">
+            <input asp-for="WalletId" type="hidden">
+
+            <div class="row">
+                <div class="form-group col-md-4 col-12">
+                    <label for="title">عنوان</label>
+                    <input asp-for="Title" type="text" class="form-control">
+                    <span asp-validation-for="Title" class="text text-danger mb-2"></span>
+                </div>
+                <div class="form-group col-md-4 col-12">
+                    <label for="title">مبلغ</label>
+                    <input asp-for="Amount" type="number" class="form-control to-seperator">
+                    <span asp-validation-for="Amount" class="text text-danger mb-2"></span>
+                </div>
+
+
+                <div class="form-group  col-12">
+                    <label for="title"> توضیحات</label>
+                    <textarea asp-for="Description" type="text" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text text-danger mb-2"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mx-1 submitBtn">ثبت</button>
+            <div class="clearfix"></div>
+        </form>
+
+
+        <br>
+    </div>
+</div>
+
+
+
+
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        $("#form").on('submit', function (e) {
+
+            e.preventDefault();
+            if ($("#form").valid() === false) return;
+            $(".submitBtn").prop('disabled', true);
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                method: 'POST',
+                url: '@Url.Action("CreateCashWithdrawalOperation")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    let result = response
+                    if (result.status === 422) {
+                        $(".submitBtn").prop('disabled', false);
+                        toastr.warning(result.message);
+                        return;
+                    }
+                    toastr.success('عملیات با موفقیت انجام شد', 'موفقیت');
+                location.href = '@Url.Action("Index", "Wallet", new { area = "admin" })'
+
+                    $(".submitBtn").prop('disabled', false);
+                },
+                error: function (e) {
+                    $(".submitBtn").prop('disabled', false);
+                toastr.error(e.responseJSON.detail, 'خطا');
+                    }
+            });
+        });
+
+
+
+    </script>
+
+
+
+

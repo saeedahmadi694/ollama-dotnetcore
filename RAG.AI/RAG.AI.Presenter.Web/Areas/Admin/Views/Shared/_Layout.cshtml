@@ -1,0 +1,399 @@
+﻿@using RAG.AI.Domain.Aggregates.GoldTradeAggregate
+@using RAG.AI.Domain.Aggregates.ProductAggregate
+@using RAG.AI.Domain.Aggregates.WithdrawalRequestAggregate
+<!DOCTYPE html>
+<html dir="rtl" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+
+
+
+    <title>@ViewData["Title"]</title>
+
+    <link href="/util/customAdmin.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="/adminAssets/dist/css/style.min.css" rel="stylesheet">
+    <link href="~/util/toast/css/jquery.toast.css" rel="stylesheet" />
+    <link href="~/util/loader/loader.css" rel="stylesheet" />
+
+    @RenderSection("Plugins", false)
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
+                        <i class="ti-menu ti-close"></i>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+
+                        </span>
+                        <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)" data-sidebartype="mini-sidebar">
+                            <i class="mdi mdi-toggle-switch mdi-toggle-switch-off font-20"></i>
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent"
+                       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ti-more"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav float-left mr-auto">
+                        @*    <li class="nav-item search-box">
+                        <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
+                        <div class="d-flex align-items-center">
+                        <i class="mdi mdi-magnify font-20 mr-1"></i>
+                        <div class="ml-1 d-none d-sm-block">
+                        <span>Search</span>
+                        </div>
+                        </div>
+                        </a>
+                        <form class="app-search position-absolute">
+                        <input type="text" class="form-control" placeholder="Search &amp; enter">
+                        <a class="srh-btn">
+                        <i class="ti-close"></i>
+                        </a>
+                        </form>
+                        </li> *@
+                    </ul>
+                    <ul class="navbar-nav float-right">
+                        <li class="nav-item dropdown border-right" id="uniBody">
+
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @* <img src="../../assets/images/users/2.jpg" alt="user" class="rounded-circle" width="40"> *@
+                                <span class="m-l-5 font-medium d-none d-sm-inline-block">@User.Identity.Name <i class="mdi mdi-chevron-down"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow">
+                                    <span class="bg-primary"></span>
+                                </span>
+                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                                    @*  <div class="">
+                                    <img src="../../assets/images/users/2.jpg" alt="user" class="rounded-circle" width="60">
+                                    </div> *@
+                                    <div class="m-l-10">
+                                        <h4 class="mb-0">@User.Identity.Name</h4>
+                                        @* <p class=" mb-0">jon@gmail.com</p> *@
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout">
+                                    <i class="fa fa-power-off m-r-5 m-l-5"></i> خروج
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </header>
+
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item ">
+                            <a href="/" class="sidebar-link">
+                                <i class="fas fa-globe"></i>
+                                <span class="hide-menu">  بازگشت به سایت </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="Index" asp-controller="Home" asp-area="Admin" class="sidebar-link">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span class="hide-menu"> داشبورد </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="fas fa-database"></i>
+                                <span class="hide-menu">اطلاعات پایه </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+
+
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="Slider" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-sliders-h"></i>
+                                        <span class="hide-menu"> اسلایدر </span>
+                                    </a>
+                                </li>
+
+
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="Comment" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-sliders-h"></i>
+                                        <span class="hide-menu"> نظرات </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void()" aria-expanded="false">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="hide-menu">درخواست ها </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+
+                                <li class="sidebar-item">
+                                    <a asp-action="CashBack" asp-controller="WithdrawalRequest" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-hand-holding-usd"></i>
+                                        <span class="hide-menu"> برداشت نقدی </span>
+                                    </a>
+                                </li>
+
+
+                                <li class="sidebar-item">
+                                    <a asp-action="InPerson" asp-controller="WithdrawalRequest" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-hand-holding-usd"></i>
+                                        <span class="hide-menu"> تحویل حضوری طلا </span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="WalletChargeRequest" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-hand-holding-usd"></i>
+                                        <span class="hide-menu">  شارژ کیف پول </span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a asp-action="BuyRequest" asp-controller="GoldTradeRequest" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-hand-holding-usd"></i>
+                                        <span class="hide-menu">  خرید ثبت شده طلا </span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a asp-action="SellRequest" asp-controller="GoldTradeRequest" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-hand-holding-usd"></i>
+                                        <span class="hide-menu">  فروش ثبت شده طلا </span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void()" aria-expanded="false">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="hide-menu">پشتیبانی </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="Ticket" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-ticket-alt"></i>
+                                        <span class="hide-menu"> تیکت ها </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="FAQ" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-ticket-alt"></i>
+                                        <span class="hide-menu"> سوالات متداول </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="fas fa-box-open"></i>
+                                <span class="hide-menu">محصولات</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+                             @*    <li class="sidebar-item">
+                                    <a asp-action="Frames" asp-controller="Product"  asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-star"></i>
+                                        <span class="hide-menu"> قالب های آماده </span>
+                                    </a>
+                                </li> *@
+                               @*  <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="Product" asp-route-type="@ProductType.Coin.Id" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-star"></i>
+                                        <span class="hide-menu"> سکه طالا </span>
+                                    </a>
+                                </li> *@
+                                <li class="sidebar-item">
+                                    <a asp-action="Bullions" asp-controller="Product" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-star"></i>
+                                        <span class="hide-menu"> پلاک/شمش طالا </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void()" aria-expanded="false">
+                                <i class="fas fa-users"></i>
+                                <span class="hide-menu">خریداران و کاربران </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="User" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-user-friends"></i>
+                                        <span class="hide-menu"> کاربران </span>
+                                    </a>
+                                </li>
+                                @*  <li class="sidebar-item">
+                                <a asp-action="Index" asp-controller="Address" asp-area="Admin" class="sidebar-link">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <span class="hide-menu"> آدرس ها </span>
+                                </a>
+                                </li> *@
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="BankAccount" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-piggy-bank"></i>
+                                        <span class="hide-menu"> حساب ها </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="Wallet" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-wallet"></i>
+                                        <span class="hide-menu"> کیف پول </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a asp-action="Index" asp-controller="Operation" asp-area="Admin" class="sidebar-link">
+                                        <i class="fas fa-wallet"></i>
+                                        <span class="hide-menu"> تراکنش ها </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="ChangePassword" asp-controller="Setting" asp-area="Admin" class="sidebar-link">
+                                <i class="fas fa-key"></i>
+                                <span class="hide-menu">تغییر گذرواژه</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="Index" asp-controller="Setting" asp-area="Admin" class="sidebar-link">
+                                <i class="fas fa-cog"></i>
+                                <span class="hide-menu">تنظیمات</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="Index" asp-controller="ContactMessage" asp-area="Admin" class="sidebar-link">
+                                <i class="fas fa-envelope"></i>
+                                <span class="hide-menu"> تماس با ما </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/logout" aria-expanded="false">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span class="hide-menu">خروج</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+
+            <footer class="footer text-center">
+            </footer>
+        </div>
+    </div>
+
+    <div class="chat-windows"></div>
+    <script src="/adminAssets/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/adminassets/dist/js/jquery-ui.min.js"></script>
+    <script src="/adminAssets/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/adminAssets/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <script src="/adminAssets/dist/js/app.min.js"></script>
+    <script src="/adminAssets/dist/js/app.init.js"></script>
+    <script src="/adminAssets/dist/js/app-style-switcher.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="/adminAssets/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="/adminAssets/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/adminAssets/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/adminAssets/dist/js/custom.js"></script>
+    <script src="/util/toast/js/jquery.toast.js"></script>
+    <script src="/util/toast/js/toast.js"></script>
+    <script src="/util/loader/loader.js"></script>
+
+    @RenderSection("Scripts", false)
+
+    <script>
+        $(document).ready(function () {
+            function formatAndUpdate(inputElement) {
+                let inputValue = $(inputElement).val();
+                let formattedValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' تومان ';
+                let resultSpan = $(inputElement).closest('div').find('.to-seperator-res');
+                if (resultSpan.length === 0) {
+                    resultSpan = $('<span class="to-seperator-res font-weight-bold"></span>');
+                    $(inputElement).closest('div').append(resultSpan);
+                }
+                resultSpan.text(formattedValue);
+            }
+            $(document).on('input', '.to-seperator', function () {
+                formatAndUpdate(this);
+            });
+
+            $('.to-seperator').each(function () {
+                formatAndUpdate(this);
+            });
+        });
+    </script>
+</body>
+
+</html>

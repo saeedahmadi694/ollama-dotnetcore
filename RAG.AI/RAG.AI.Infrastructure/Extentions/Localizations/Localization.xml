@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="en">
+	<texts>
+		<text name="Product_Can_Not_Sale">امکان خرید این محصول میسر نمی باشد</text>
+		<text name="Product_Not_Defined">محصول یافت نشد</text>
+		
+		<text name="UserBankAlreadyExist">شماره کارت وارد شده وجود دارد</text>
+		<text name="ConsumerReferralGiftOperation"> (کد معرف) واریز به کیف پول طلا</text>
+		<text name="OwnerReferralGiftOperation"> (کد معرف) واریز به کیف پول طلا</text>
+
+		<text name="UserBankCardNotFound">شماره کارت : {0} یافت نشد</text>
+		<text name="CardInfoNotBelong">شماره کارت : {0} با مشخصات شما تطابق ندارد</text>
+		
+		<text name="MobileOwnershipReject">کاربر گرامی، احراز مالکیت شما بر شماره موبایل وارد شده تأیید نشد. لطفاً اطلاعات خود را بررسی کرده و مجدداً تلاش کنید</text>
+		<text name="UserInfoProblem">کاربر گرامی، احراز هویت اطلاعات وارد شده نادرست است. لطفاً کد ملی یا تاریخ تولد خود را بررسی و مجدداً تلاش کنید.</text>
+
+		<text name="UserIdentityNotVerified">اطلاعات هویتی احراز نشده.</text>
+		
+		<text name="ChargeWallet">شارژ کیف پول</text>
+		<text name="WalletBalanceIsLess">موجودی کیف پول شما کمتر از مبلغ درخواست شده می باشد</text>
+
+		<text name="InActiveWallet">کیف پول غیر فعال می باشد</text>
+
+		<text name="Can_not_withdraw_more_than_remain">امکان برداشت بیشتر از موجودی امکان پذیر نمی باشد</text>
+		
+		<text name="GoldBackMinAmount">حداقل مقدار برداشت طلا {0} گرم می باشد</text>
+		<text name="CashBackMinAmount">حداقل مبلغ برداشت نقدی {0} ریال می باشد</text>
+		
+		<text name="InActiveGoldBack">امکان برداشت حضوری غیر فعال شده است</text>
+		<text name="InActiveCashBack">امکان برداشت نقدی غیر فعال شده است</text>
+		
+		<text name="SellMinAmount">حداقل مقدار فروش {0} گرم می باشد</text>
+		<text name="BuyMinAmount">حداقل مقدار خرید {0} گرم می باشد</text>
+		
+		<text name="InActiveSell">امکان فروش غیر فعال شده است</text>
+		<text name="InActiveBuy">امکان خرید غیر فعال شده است</text>
+		
+		<text name="ServiceUsageOperation">سرویس خدمات</text>
+		<text name="SignUpOperation">هدیه ثبت نام</text>
+		<text name="CreditDepositOperation">افزایش اعتبار </text>
+		
+		<text name="CashWithdrawalOperation">برداشت از کیف پول نقدی </text>
+		<text name="GoldDepositOperation">واریز به کیف پول طلا </text>
+
+
+		<text name="GoldWithdrawalOperation">برداشت از کیف پول طلا </text>
+		<text name="CashDepositOperation">واریز به کیف پول نقدی </text>
+		
+		<text name="PLEASE_WAIT_UNTIL_THE_OTP_TIMER_ENDS_AND_REQUEST_NEW_CODE_AGAIN">لطفاً تا پایان تایمر صبر کنید. ارسال مجدد کد تأیید پس از ۲ دقیقه امکان‌پذیر خواهد بود.</text>
+		<text name="SSO_Otp_Message">سامانه یکپارچه گلدساز</text>
+		<text name="InvalidUsernameOrPassword">نام کاربری یا رمز عبور اشتباه است</text>
+		<text name="PasswordHasChanged">تغییر گذرواژه</text>
+		<text name="ExceptionHappened">هنگام انجام عملیات خطایی رخ داد. لطفاً بعداً دوباره امتحان کنید</text>
+		<text name="UnAuthorizedRequest">کاربر گرامی شما به این قسمت از سایت دسترسی ندارید</text>
+		<text name="NationalCodeExist">کد ملی وارد شده وجود دارد</text>
+		<text name="EmailExist">ایمیل وارد شده وجود دارد</text>
+		<text name="UserExist">نام کاربری وارد شده وجود دارد</text>
+		<text name="ValidationEmailCode">کد یکتای وارد شده معتبر نمی باشد</text>
+		<text name="UserNotFound">نام کاربری یا رمز عبور اشتباه است</text>
+		<text name="UserNotFoundEmail">کاربری با ایمیل وارد شده در سایت ثبت نام نکرده است</text>
+		<text name="PendingCashBackReq">کاربر گرامی شما یه درخواست در دست بررسی دارید. برای درخواست جدید باید تا پایان وضعیت قبلی صبر کنید</text>
+		<text name="EntityNotFound">موجودیت یافت نشد</text>
+		<text name="BaroceLength">بارکد پستی باید 24 رقم باشد</text>
+		<text name="MinWithdrawAmount">حداقل مقدار برداشت از کیف پول {0} تومان می باشد</text>
+		<text name="OverflowWithdrawWallet">امکان برداشت بیشتر از مقدار کیف پول امکان پذیر نمی باشد</text>
+		<text name="ProductSetToBeAccepted">کتاب فروشی {0} , کتاب شما با نام {1} تایید گردید</text>
+		<text name="ProductSetToBeRejected">کتاب فروشی {0} , کتاب شما با نام {1} رد گردید به دلایل {2}</text>
+		<text name="ProductSetToBeNeededChange">کتاب فروشی {0} , کتاب شما با نام {1} نیازمند ویرایش است</text>
+		<text name="AlreadySent">برای ارسال دوباره کد پیامکی باید 30 ثانیه دیگر تلاش نمایید</text>
+		<text name="OTPCodeIsWrong">کد وارد شده اشتباه می باشد</text>
+		<text name="ProductAlreadyAdded">محصول وارد شده در لیست شما موجود می باشد. برای ویرایش کتاب به قسمت آگهی ها مراجعه کنید</text>
+		<text name="PreventEditInqeryBook">امکان ویرایش جستجو وجود ندارد</text>
+		<text name="UserAccessDenied">دسترسی شما گرفته شده است</text>
+		<text name="CurrentPasswordInvalid">رمز عبور فعلی صحیح نیست</text>
+		<text name="ZarinPalFailRequest">عدم اتصال به زرین پال</text>
+		<text name="CreditExpireDate">کد تخفیف منقضی شده است</text>
+		<text name="CreditUsageEnd">تعداد استفاده از کد تخفیف تمام شده است</text>
+		<text name="CreditNotFound">کد تخفیف پیدا نشد</text>
+		<text name="CreditSuccess">کد تخفیف با موفقیت اعمال شد</text>
+		<text name="CreditNotActive">کد تخفیف فعال نیست</text>
+		<text name="AddressNotFound">لطفا از قسمت پروفایل آدرس ها آدرسی وارد نمایید</text>
+		<text name="WalletNotFound">کیف پول یافت نشد</text>
+		<text name="SettingsNotFound">تنظیمات یافت نشد</text>
+		<text name="CommentNotFound">کامنت یافت نشد</text>
+		<text name="FAQNotFound">سوالات متداول یافت نشد</text>
+		<text name="FrameNotFound">قالب یافت نشد</text>
+		<text name="TradeRequestNotFoundException">درخواست یافت نشد</text>
+		<text name="BuyFromItsOwnerError">امکان خرید از فروشگاه خودتان امکان پذیر نمی باشد</text>
+		<text name="BasketUpdatedMessage">سبد شما با موفقیت به روز شد</text>
+		<text name="SuccessRegisterMessage">شما با موفقیت ثبت نام کردید. لطفا وارد شوید</text>
+		<text name="BookAlreadyExist">کتاب وارد شده در بانک اطلاعاتی موجود می باشد</text>
+		<text name="CreditAlreadyExist">کد وارد شده موجود می باشد</text>
+		<text name="IsbnFormate">ساختار شابک به درستی وارد نشده است</text>
+		<text name="AtleastChoseOneQuality">حداقل یک مورد از ویژگی های کتاب باید انتخاب شود</text>
+		<text name="ProductQuantityRanOut">موجودی محصول {0} کمتر از میزان انتخاب شما می باشد, موجودی فعلی: {1}</text>
+		<text name="GenerateWalletTitle">حساب-{0}-نقدی</text>
+
+
+		<text name="ReadyForDelivery">آماده تحویل</text>
+		
+		<text name="Both">هردو</text>
+		<text name="Owner">مالک</text>
+		<text name="Consumer">مصرف کننده</text>
+
+		<text name="Gold">طلا</text>
+		<text name="Cash">نقدی</text>
+		
+		<text name="Waiting">در انتظار</text>
+		<text name="Paid">پرداخت شده</text>
+		<text name="Cancelled">لغو شده</text>
+
+		<text name="Admin">مدیر</text>
+		<text name="User">کاربر</text>
+
+		<text name="CRD">اعتباری</text>
+		<text name="DEB">بدهی</text>
+
+		<text name="Closed">بسته شده</text>
+		<text name="WaitingAnswer">در انتظار پاسخ</text>
+		<text name="Answered">پاسخ داده شده</text>
+		<text name="UserAnswered">پاسخ کاربر</text>
+		<text name="Redirected">ارجاع داده شده</text>
+
+		<text name="TicketFile">فایل تیکت</text>
+		<text name="DiscussionFile">فایل گفتگو</text>
+
+		<text name="Sepehr">سپهر</text>
+		<text name="Parsian">پارسیان</text>
+		<text name="Saman">سامان</text>
+		<text name="ParbadVirtual">پرباد مجازی</text>
+		<text name="Wallet">کیف پول</text>
+
+		<text name="CashDeposit">واریز نقدی</text>
+		<text name="GoldDeposit">واریز طلا</text>
+		<text name="CashWithdrawal">برداشت نقدی</text>
+		<text name="GoldWithdrawal">برداشت طلا</text>
+		<text name="SignUp">ثبت‌نام</text>
+		<text name="BuyTrade">معامله خرید</text>
+		<text name="SellTrade">معامله فروش</text>
+
+		<text name="SimpleNotification">اعلان ساده</text>
+		<text name="OrderNotification">اعلان سفارش</text>
+		<text name="TicketNotification">اعلان تیکت</text>
+		<text name="CreditNotification">اعلان اعتبار</text>
+		<text name="GiftNotification">اعلان هدیه</text>
+
+		<text name="Buy">خرید</text>
+		<text name="Sell">فروش</text>
+
+		<text name="None">بدون جنسیت</text>
+		<text name="Male">مرد</text>
+		<text name="Female">زن</text>
+
+		<text name="MARKAZI">مرکزی</text>
+		<text name="SANAT_VA_MADAN">صنعت و معدن</text>
+		<text name="MELLAT">ملت</text>
+		<text name="REFAH">رفاه</text>
+		<text name="MASKAN">مسکن</text>
+		<text name="SEPAH">سپاه</text>
+		<text name="KESHAVARZI">کشاورزی</text>
+		<text name="MELLI">ملی</text>
+		<text name="TEJARAT">تجارت</text>
+		<text name="SADERAT">صادرات</text>
+		<text name="TOSEAH_SADERAT">توسعه صادرات</text>
+		<text name="POST">پست</text>
+		<text name="TOSEAH_TAAVON">توسعه تعاون</text>
+		<text name="TOSEAH">توسعه</text>
+		<text name="KARAFARIN">کارآفرین</text>
+		<text name="PARSIAN">پارسیان</text>
+		<text name="EGHTESAD_NOVIN">اقتصاد نوین</text>
+		<text name="SAMAN">سامان</text>
+		<text name="PASARGAD">پاسارگاد</text>
+		<text name="SARMAYEH">سرمایه</text>
+		<text name="SINA">سینا</text>
+		<text name="MEHR_IRAN">مهر ایران</text>
+		<text name="SHAHR">شهر</text>
+		<text name="AYANDEH">آینده</text>
+		<text name="GARDESHGARI">گردشگری</text>
+		<text name="DAY">دی</text>
+		<text name="IRANZAMIN">ایران زمین</text>
+		<text name="RESALAT">رسالت</text>
+		<text name="MELAL">ملل</text>
+		<text name="KHAVARMIANEH">خاورمیانه</text>
+		<text name="NOOR">نور</text>
+		<text name="IRAN_VENEZUELA">ایران و ونزوئلا</text>
+		<text name="UNKNOWN">نامشخص</text>
+
+
+	</texts>
+</localizationDictionary>
+
