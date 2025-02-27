@@ -1,41 +1,44 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.VectorData;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Connectors.Qdrant;
 using Microsoft.SemanticKernel.Embeddings;
 using Qdrant.Client;
+using RAG.AI.Infrastructure.Configurations;
 using RAG.AI.Infrastructure.Dtos.Common;
-using RaggedBooks.Core.Configuration;
 using System.Diagnostics;
 
 namespace RAG.AI.Infrastructure.ExternalServices;
 
 
+#pragma warning disable S125
+#pragma warning disable SKEXP0001
 
 public class VectorSearchService : IVectorSearchService
 {
-    private readonly RAGConfig _raggedBookConfig;
+    private readonly RAGConfig _config;
     private readonly ILogger<VectorSearchService> _logger;
     private readonly ITextEmbeddingGenerationService _textEmbeddingGenerationService;
     private readonly IVectorStoreRecordCollection<ulong, ContentChunk> _collection;
 
     public VectorSearchService(
         Kernel kernel,
-        RAGConfig raggedBookConfig,
+        IOptions<RAGConfig> _optionsa,
         ILogger<VectorSearchService> logger
     )
     {
-        _raggedBookConfig = raggedBookConfig;
+        _config = _optionsa.Value;
         _logger = logger;
         _textEmbeddingGenerationService =
             kernel.GetRequiredService<ITextEmbeddingGenerationService>();
 
         // note that we are skipping the portnumber as grpc port defaultss to 6334
-        var vectorStore = new QdrantVectorStore(new QdrantClient(_raggedBookConfig.QdrantUrl.Host));
+        var vectorStore = new QdrantVectorStore(new QdrantClient(_config.QdrantUrl.Host));
         var vectorStoreRecordDefinition = SetupVectorStoreRecordDefinition();
 
         _collection = vectorStore.GetCollection<ulong, ContentChunk>(
-            _raggedBookConfig.VectorCollectionname,
+            _config.VectorCollectionName,
             vectorStoreRecordDefinition
         );
     }
@@ -44,26 +47,17 @@ public class VectorSearchService : IVectorSearchService
     {
         var vectorStoreRecordDefinition = new VectorStoreRecordDefinition()
         {
-            Properties = new List<VectorStoreRecordProperty>()
-            {
+            Properties =
+            [
                 new VectorStoreRecordKeyProperty("Id", typeof(Guid)),
-                new VectorStoreRecordDataProperty("Book", typeof(string)) { IsFilterable = true },
-                new VectorStoreRecordDataProperty("BookFilename", typeof(string))
-                {
-                    IsFilterable = true,
-                },
-                new VectorStoreRecordDataProperty("Chapter", typeof(string)),
+                //new VectorStoreRecordDataProperty("DocumentId", typeof(Guid)){ IsFilterable = true },
+                new VectorStoreRecordDataProperty("Document", typeof(string)) { IsFilterable = true },
+                new VectorStoreRecordDataProperty("DocumentFileName", typeof(string)) { IsFilterable = true },
                 new VectorStoreRecordDataProperty("PageNumber", typeof(int)),
                 new VectorStoreRecordDataProperty("Index", typeof(int)),
                 new VectorStoreRecordDataProperty("Content", typeof(string)),
-                new VectorStoreRecordVectorProperty(
-                    "ContentEmbedding",
-                    typeof(ReadOnlyMemory<float>)
-                )
-                {
-                    Dimensions = _raggedBookConfig.EmbeddingDimensions,
-                },
-            },
+                new VectorStoreRecordVectorProperty("ContentEmbedding",typeof(ReadOnlyMemory<float>)){Dimensions = _config.EmbeddingDimensions},
+            ],
         };
 
         return vectorStoreRecordDefinition;

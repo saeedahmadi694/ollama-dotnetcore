@@ -13,18 +13,18 @@ public class ChatService(Kernel kernel) : IChatService
 
         var chat = new ChatHistory(
             """
-            You can use only the information provided in this chat to answer questions. If you don't know the answer, reply suggesting to refine the question.
-            For example, if the user asks "What is the capital of France?" and in this chat there isn't information about France, you should reply something like "This information isn't available in the given context".
-            You will be given chunks of text from different books to use as context.
-            You must answer in the same language of the user's question.
-            You will repond in markdown.
+            شما فقط می‌توانید از اطلاعات ارائه‌شده در این چت برای پاسخ به سؤالات استفاده کنید. اگر پاسخ را نمی‌دانید، پیشنهاد دهید که سؤال اصلاح شود.
+            به عنوان مثال، اگر کاربر بپرسد "پایتخت فرانسه چیست؟" و در این چت اطلاعاتی درباره‌ی فرانسه وجود نداشته باشد، باید پاسخی مانند "این اطلاعات در متن داده‌شده موجود نیست" بدهید.
+            به شما بخش‌هایی از متن کتاب‌های مختلف داده می‌شود تا به عنوان زمینه استفاده کنید.
+            باید به همان زبانی که سؤال پرسیده شده است پاسخ دهید.
+            شما پاسخ‌ها را در قالب Markdown ارائه خواهید داد.
 
             """
         );
 
         var prompt = new StringBuilder(
             """
-            Using the following information:
+            با استفاده از اطلاعات زیر:
             =====
 
             """
@@ -39,7 +39,7 @@ public class ChatService(Kernel kernel) : IChatService
             $"""
 
             =====
-            Answer the following question:
+            به سوال زیر پاسخ دهید:
             ---
             {question}
             """

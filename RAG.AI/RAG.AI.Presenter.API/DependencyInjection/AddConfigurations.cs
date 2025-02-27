@@ -10,6 +10,7 @@ public static class AddConfigurations
         services.Configure<MinioConfig>(options => configuration.GetSection(MinioConfig.Key).Bind(options));
         services.Configure<JwtConfig>(options => configuration.GetSection(JwtConfig.Key).Bind(options));
         services.Configure<ApplicationConfig>(configuration.GetSection(ApplicationConfig.Key));
+        services.Configure<RAGConfig>(configuration.GetSection(RAGConfig.Key));
 
         return services;
     }

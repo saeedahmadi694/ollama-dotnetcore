@@ -29,7 +29,7 @@ public class RagService : IRagService
         foreach (var record in matchingRecords)
         {
             var text =
-                $"{record.Content}{Environment.NewLine}(source: {record.Book} - {record.Chapter})";
+                $"{record.Content}{Environment.NewLine}(source: {record.Document} - )";
 
             contexts.Add(text.Trim());
         }

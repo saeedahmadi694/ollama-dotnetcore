@@ -5,7 +5,6 @@ using RAG.AI.Presenter.API.DependencyInjection;
 using RAG.AI.Presenter.API.Filters;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
-using Parbad.Storage.EntityFrameworkCore.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +42,7 @@ builder.Services.AddConfiguredStackExchangeRedisCache(configuration);
 builder.Services.AddOperationLockManager();
 builder.Services.AddTokenAuthentication(configuration);
 builder.Services.AddRepositories(configuration);
+builder.Services.AddConfiguredRAG(configuration);
 
 builder.Services.AddScoped<IAIIntegrationEventService, AIIntegrationEventService>();
 builder.Services.AddScoped<IAIMediatrIntegrationEventService, AIMediatrIntegrationEventService>();
@@ -136,7 +136,7 @@ app.UseCors(CorsPolicy);
 
 if (!env.IsProduction())
 {
-    app.UseParbadVirtualGateway();
+
 }
 
 app.UseSwagger(c => c.RouteTemplate = "swagger/{documentName}/swagger.json");
