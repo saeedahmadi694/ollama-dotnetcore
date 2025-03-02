@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RAG.AI.Application.Commands.UploadDocument;
+using RAG.AI.Application.Queries.DocumentStatus;
 
 namespace RAG.AI.Presenter.API.Controllers;
 
@@ -17,6 +18,12 @@ public class SourceController : ControllerBase
 
     [HttpPost("upload-document", Name = "UploadDocument")]
     public async Task<ActionResult<Unit>> UploadDocument([FromForm] UploadDocumentCommand command, CancellationToken clt)
+    {
+        var result = await _mediator.Send(command, clt);
+        return Ok(result);
+    }
+    [HttpPost("document-status", Name = "DocumentStatus")]
+    public async Task<ActionResult<Unit>> DocumentStatus([FromForm] DocumentStatusQuery command, CancellationToken clt)
     {
         var result = await _mediator.Send(command, clt);
         return Ok(result);

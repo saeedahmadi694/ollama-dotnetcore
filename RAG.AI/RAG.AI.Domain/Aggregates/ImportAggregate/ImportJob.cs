@@ -5,14 +5,20 @@ namespace RAG.AI.Domain.Aggregates.ImportAggregate;
 public class ImportJob : AggregateRoot<int>
 {
     public int UserId { get; private set; }
+    public Guid UniqueId { get; private set; }
     public string FileAddress { get; private set; }
+    public string FileName { get; private set; }
     public ImportJobStatus Status { get; private set; }
 
-    private ImportJob() { }
-    public ImportJob(int userId, string fileAddress) : this()
+    private ImportJob()
+    {
+        UniqueId = Guid.NewGuid();
+    }
+    public ImportJob(int userId, string fileAddress, string fileName) : this()
     {
         UserId = userId;
         FileAddress = fileAddress;
+        FileName = fileName;
         Status = ImportJobStatus.Created;
     }
 

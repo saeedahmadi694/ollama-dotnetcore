@@ -9,6 +9,7 @@ public interface IUnitOfWork
     #region Repositories
 
     IScheduledJobLogRepository ScheduledJobLogRepository { get; }
+    IImportJobRepository ImportJobRepository { get; }
 
 
     #endregion

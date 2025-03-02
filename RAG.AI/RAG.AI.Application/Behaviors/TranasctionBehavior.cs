@@ -57,14 +57,11 @@ public class TranasactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequ
 
                     _logger.Information("----- Commit transaction {TransactionId} for {CommandName}",
                         transaction.TransactionId, typeName);
-
-                    //while (_commandHelper.NeedCommitting)
-                    //{
-                    //    _commandHelper.NeedCommitting = false;
-                    //    await _mediator.DispatchDomainEventsAsync(_context);
-                    //}
-                    //await _mediator.DispatchDomainEventsAsync(_context);
-
+                    while (_commandHelper.NeedCommitting)
+                    {
+                        _commandHelper.NeedCommitting = false;
+                        await _mediator.DispatchDomainEventsAsync(_context);
+                    }
 
                     await _uow.CommitTransactionAsync(transaction);
 

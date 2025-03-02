@@ -5,6 +5,7 @@ using RAG.AI.Presenter.API.DependencyInjection;
 using RAG.AI.Presenter.API.Filters;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
+using OpenRouterSharp.AspNetCore.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,7 @@ builder.Services.AddOperationLockManager();
 builder.Services.AddTokenAuthentication(configuration);
 builder.Services.AddRepositories(configuration);
 builder.Services.AddConfiguredRAG(configuration);
+builder.Services.AddConfiguredOpenRouterSharp(configuration);
 
 builder.Services.AddScoped<IAIIntegrationEventService, AIIntegrationEventService>();
 builder.Services.AddScoped<IAIMediatrIntegrationEventService, AIMediatrIntegrationEventService>();
@@ -119,9 +121,9 @@ app.UseSerilogRequestLogging(options =>
     };
 });
 
-//app.UseHttpsRedirection();
-app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseHttpsRedirection();
+//app.UseDefaultFiles();
+//app.UseStaticFiles();
 
 app.UseRouting();
 

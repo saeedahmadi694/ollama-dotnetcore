@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace RAG.AI.Application.Commands.UploadDocument;
-public record UploadDocumentCommand(
-        IFormFile File) : ICommand<Guid>
+namespace RAG.AI.Application.Queries.DocumentStatus;
+public record DocumentStatusQuery(Guid UniqueId) : IQuery<string>
 {
 }
 //public class CreateTicketCommandValidator : AbstractValidator<UploadDocumentCommand>

@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="BusConsumers\" />
-    <Folder Include="DomainEventHandlers\" />
     <Folder Include="IntegrationEvents\EventHandling\" />
     <Folder Include="IntegrationEvents\Events\" />
     <Folder Include="Models\" />

@@ -50,7 +50,7 @@ public class VectorSearchService : IVectorSearchService
             Properties =
             [
                 new VectorStoreRecordKeyProperty("Id", typeof(Guid)),
-                //new VectorStoreRecordDataProperty("DocumentId", typeof(Guid)){ IsFilterable = true },
+                new VectorStoreRecordDataProperty("DocumentId", typeof(string)){ IsFilterable = true },
                 new VectorStoreRecordDataProperty("Document", typeof(string)) { IsFilterable = true },
                 new VectorStoreRecordDataProperty("DocumentFileName", typeof(string)) { IsFilterable = true },
                 new VectorStoreRecordDataProperty("PageNumber", typeof(int)),

@@ -1,6 +1,8 @@
 ﻿using RAG.AI.Domain.SeedWork;
 using RAG.AI.Domain.SeedWork.RepositoryInterfaces;
 using RAG.AI.Infrastructure.Persistent;
+using RAG.AI.Infrastructure.Persistent.QueryServices;
+using RAG.AI.Infrastructure.Persistent.QueryServices.QueryServiceInterfaces;
 using RAG.AI.Infrastructure.Persistent.Repositories;
 
 namespace RAG.AI.Presenter.API.DependencyInjection;
@@ -14,6 +16,9 @@ public static class AddRepositoriesInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IScheduledJobLogRepository, ScheduledJobLogRepository>();
+
+
+        services.AddScoped<IImportJobQueryService, ImportJobQueryService>();
 
 
         return services;

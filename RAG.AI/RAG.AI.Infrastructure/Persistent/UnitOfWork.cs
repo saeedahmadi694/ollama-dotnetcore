@@ -61,6 +61,17 @@ public class UnitOfWork : IUnitOfWork
             return _scheduledJobLogRepository;
         }
     }
+
+    private IImportJobRepository _importJobRepository;
+    public IImportJobRepository ImportJobRepository
+    {
+        get
+        {
+            if (_importJobRepository == null)
+                _importJobRepository = new ImportJobRepository(_dbContext);
+            return _importJobRepository;
+        }
+    }
     #endregion
 }
 

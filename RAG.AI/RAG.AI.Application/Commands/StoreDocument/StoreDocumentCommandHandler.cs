@@ -60,7 +60,7 @@ public class StoreDocumentCommandHandler : IRequestHandler<StoreDocumentCommand,
                 var chunk = new ContentChunk
                 {
                     Id = Guid.NewGuid(),
-                    DocumentId = request.Doc.DocumentId,
+                    DocumentId = request.Doc.DocumentId.ToString(),
                     Document = request.Doc.Title,
                     PageNumber = page.Pagenumber,
                     Content = paragraph,
