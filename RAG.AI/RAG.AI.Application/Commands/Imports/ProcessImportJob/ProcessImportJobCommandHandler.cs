@@ -9,7 +9,7 @@ using RAG.AI.Infrastructure.Exceptions.BaseExceptions;
 using RAG.AI.Infrastructure.ExternalServices;
 
 namespace RAG.AI.Application.Commands.Imports.ProcessExcelImportJob;
-public class ProcessExcelImportJobCommandHandler : IRequestHandler<ProcessExcelImportJobCommand, Unit>
+public class ProcessImportJobCommandHandler : IRequestHandler<ProcessImportJobCommand, Unit>
 {
     private readonly MinioConfig _minioConfig;
     private readonly IFileSaverService _fileSaverService;
@@ -17,7 +17,7 @@ public class ProcessExcelImportJobCommandHandler : IRequestHandler<ProcessExcelI
     private readonly IMediator _mediator;
     private readonly ILogger _logger;
 
-    public ProcessExcelImportJobCommandHandler(IOptions<MinioConfig> minioConfig, IUnitOfWork uow, IMediator mediator, ILogger logger, IFileSaverService fileSaverService)
+    public ProcessImportJobCommandHandler(IOptions<MinioConfig> minioConfig, IUnitOfWork uow, IMediator mediator, ILogger logger, IFileSaverService fileSaverService)
     {
         _minioConfig = minioConfig.Value;
         _uow = uow;
@@ -26,7 +26,7 @@ public class ProcessExcelImportJobCommandHandler : IRequestHandler<ProcessExcelI
         _fileSaverService = fileSaverService;
     }
 
-    public async Task<Unit> Handle(ProcessExcelImportJobCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(ProcessImportJobCommand request, CancellationToken cancellationToken)
     {
         var importJob = await _uow.ImportJobRepository.GetAsync(request.JobId);
         if (importJob is null)
@@ -49,10 +49,10 @@ public class ProcessExcelImportJobCommandHandler : IRequestHandler<ProcessExcelI
 
         var pages = ExtractTextFromPdf(pdfReader);
 
-        var doc = new Document("", pages, importJob.FileName, importJob.UniqueId);
-
+        var doc = new Document(importJob.Id, "", pages, importJob.FileName, importJob.UniqueId);
         await _mediator.Send(new StoreDocumentCommand(doc), cancellationToken);
 
+        importJob.SetAsInProgress();
         return Unit.Value;
     }
 

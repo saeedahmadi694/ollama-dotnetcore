@@ -67,7 +67,6 @@ public class TranasactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequ
 
                     transactionId = transaction.TransactionId;
                 }
-                await _mediator.DispatchDomainEventsAsync(_context);
                 await _integrationEventService.PublishEventsThroughEventBusAsync(transactionId);
                 await _mediatrIntegrationEventService.PublishEventsThroughEventAsync(transactionId);
             });

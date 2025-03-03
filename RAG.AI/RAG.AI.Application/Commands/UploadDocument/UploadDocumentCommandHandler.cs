@@ -18,10 +18,11 @@ public class UploadDocumentCommandHandler : IRequestHandler<UploadDocumentComman
     {
         string fileAddress = await UploadImage(request.File);
 
+        //var newJob = new ImportJob(1, "asdasddasd", request.File.FileName);
         var newJob = new ImportJob(1, fileAddress, request.File.FileName);
         await _unitOfWork.ImportJobRepository.InsertAsync(newJob);
         newJob.SetAsCreated();
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         return newJob.UniqueId;
     }
 

@@ -38,14 +38,14 @@ public class ChatDocumentCommandHandler : IRequestHandler<ChatDocumentCommand, s
         var textChunks = searchResults.Select(x => x.Record.Content).ToArray();
         var documents = searchResults.Select(x => x.Record.Document).Distinct().ToArray();
         _logger.Information(
-            "Asking {Model} with {Resultcount} contexts. from these {BookCount} books:",
+            "Asking {Model} with {Resultcount} contexts. from these {BookCount} docs:",
             _config.ChatCompletionModel,
             resultcount,
             documents.Length
         );
-        foreach (var book in documents)
+        foreach (var doc in documents)
         {
-            _logger.Information(" - {Book}", book);
+            _logger.Information(" - {document}", doc);
         }
 
         //var response = await _chatService.AskRaggedQuestion(request.Query, [.. textChunks]);

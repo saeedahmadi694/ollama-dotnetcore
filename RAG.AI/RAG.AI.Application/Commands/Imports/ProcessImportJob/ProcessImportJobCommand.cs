@@ -1,11 +1,11 @@
 ﻿namespace RAG.AI.Application.Commands.Imports.ProcessExcelImportJob;
-public record ProcessExcelImportJobCommand(int JobId) : ICommand<Unit>
+public record ProcessImportJobCommand(int JobId) : ICommand<Unit>
 {
 }
 
 
 
-public class ProcessExcelImportJobCommandValidator : AbstractValidator<ProcessExcelImportJobCommand>
+public class ProcessExcelImportJobCommandValidator : AbstractValidator<ProcessImportJobCommand>
 {
     public ProcessExcelImportJobCommandValidator()
     {

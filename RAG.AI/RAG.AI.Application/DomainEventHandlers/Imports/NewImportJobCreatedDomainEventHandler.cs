@@ -9,7 +9,7 @@ public class NewImportJobCreatedDomainEventHandler : INotificationHandler<NewImp
 {
     private readonly IMediator _mediator;
 
-    public NewImportJobCreatedDomainEventHandler( IMediator mediator)
+    public NewImportJobCreatedDomainEventHandler(IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -17,6 +17,7 @@ public class NewImportJobCreatedDomainEventHandler : INotificationHandler<NewImp
 
     public async Task Handle(NewImportJobCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
-        await _mediator.Send(new ProcessExcelImportJobCommand(notification.JobId));
+        //await Task.Delay(10000);
+        await _mediator.Send(new ProcessImportJobCommand(notification.JobId));
     }
 }
