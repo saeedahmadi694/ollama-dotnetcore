@@ -1,4 +1,4 @@
-﻿namespace RAG.AI.Application.Commands.Imports.ProcessExcelImportJob;
+﻿namespace RAG.AI.Application.Commands.Imports.ProcessImportJob;
 public record ProcessImportJobCommand(int JobId) : ICommand<Unit>
 {
 }

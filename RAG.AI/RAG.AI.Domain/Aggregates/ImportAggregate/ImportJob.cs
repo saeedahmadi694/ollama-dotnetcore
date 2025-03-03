@@ -27,7 +27,7 @@ public class ImportJob : AggregateRoot<int>
         if (Status.IsInProgress)
             return this;
         Status = ImportJobStatus.InProgress;
-        RaiseDomainEvent(new ImportJobStartedDomainEvent(Id));
+        //RaiseDomainEvent(new ImportJobStartedDomainEvent(Id));
         return this;
     }
     public ImportJob SetAsFailed()
@@ -35,7 +35,7 @@ public class ImportJob : AggregateRoot<int>
         if (Status.IsFailed)
             return this;
         Status = ImportJobStatus.Failed;
-        RaiseDomainEvent(new ImportJobStatusChangedDomainEvent(Id));
+        //RaiseDomainEvent(new ImportJobStatusChangedDomainEvent(Id));
         return this;
     }
     public ImportJob SetAsSucceeded()
@@ -43,16 +43,16 @@ public class ImportJob : AggregateRoot<int>
         if (Status.IsSucceeded)
             return this;
         Status = ImportJobStatus.Succeeded;
-        RaiseDomainEvent(new ImportJobStatusChangedDomainEvent(Id));
+        //RaiseDomainEvent(new ImportJobStatusChangedDomainEvent(Id));
         return this;
     }
 
     public ImportJob SetAsCreated()
     {
         Status = ImportJobStatus.Created;
-        if (DomainEvents.Any(e => e.GetType().Name == typeof(NewImportJobCreatedDomainEvent).Name))
-            return this;
-        RaiseDomainEvent(new NewImportJobCreatedDomainEvent(Id));
+        //if (DomainEvents.Any(e => e.GetType().Name == typeof(NewImportJobCreatedDomainEvent).Name))
+        //    return this;
+        //RaiseDomainEvent(new NewImportJobCreatedDomainEvent(Id));
         return this;
     }
 

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NCrontab;
+using Qdrant.Client.Grpc;
 using RAG.AI.Application.Commands.ScheduledJobLogs.CreateFinishJobLog;
 using RAG.AI.Application.Commands.ScheduledJobLogs.CreateNewScheduledJobLog;
 using RAG.AI.Domain.SeedWork.Utilities;
@@ -12,7 +13,7 @@ namespace RAG.AI.BackgroundTasks;
 public abstract class ScheduledBackgroundService : IHostedService, IDisposable
 {
     protected readonly ILogger _logger;
-    protected readonly IOperationLockManager _lockManager;
+    //protected readonly IOperationLockManager _lockManager;
     protected IServiceProvider _services;
     protected CrontabSchedule _cronSchedule;
     protected IMediator _mediator;
@@ -30,7 +31,7 @@ public abstract class ScheduledBackgroundService : IHostedService, IDisposable
     {
         _logger = logger;
         _services = services;
-        _lockManager = _services.GetRequiredService<IOperationLockManager>();
+        //_lockManager = _services.GetRequiredService<IOperationLockManager>();
         _needLock = needLock;
         _needLog = needLog;
     }
@@ -49,16 +50,18 @@ public abstract class ScheduledBackgroundService : IHostedService, IDisposable
             new CrontabSchedule.ParseOptions { IncludingSeconds = false });
     }
 
-    protected Task<bool> IsLockedAsync()
+    protected async Task<bool> IsLockedAsync()
     {
         var lockKey = GetType().Name;
-        return _lockManager.IsLockedAsync(lockKey, _executionTimeout);
+        //return _lockManager.IsLockedAsync(lockKey, _executionTimeout);
+        return await Task.FromResult(false);
     }
 
-    protected Task<bool> ReleaseLockAsync()
+    protected async Task<bool> ReleaseLockAsync()
     {
         var lockKey = GetType().Name;
-        return _lockManager.ReleaseLockAsync(lockKey);
+        return await Task.FromResult(true);
+        //return _lockManager.ReleaseLockAsync(lockKey);
     }
 
     protected async Task RunTask(CancellationToken cancellationToken)

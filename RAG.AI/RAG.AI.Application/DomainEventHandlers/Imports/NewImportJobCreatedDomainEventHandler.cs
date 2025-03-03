@@ -1,6 +1,6 @@
 ﻿using BookHouse.Core.Bases;
 using BookHouse.Core.Localization;
-using RAG.AI.Application.Commands.Imports.ProcessExcelImportJob;
+using RAG.AI.Application.Commands.Imports.ProcessImportJob;
 using RAG.AI.Domain.DomainEvents.Imports;
 using RAG.AI.Domain.SeedWork;
 

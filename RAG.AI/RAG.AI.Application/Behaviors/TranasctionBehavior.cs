@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RAG.AI.Domain.DomainEvents.Imports;
 using RAG.AI.Domain.SeedWork;
 using RAG.AI.Infrastructure.Extentions;
 
@@ -67,7 +68,7 @@ public class TranasactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequ
 
                     transactionId = transaction.TransactionId;
                 }
-                await _integrationEventService.PublishEventsThroughEventBusAsync(transactionId);
+                //await _integrationEventService.PublishEventsThroughEventBusAsync(transactionId);
                 await _mediatrIntegrationEventService.PublishEventsThroughEventAsync(transactionId);
             });
 

@@ -9,11 +9,4 @@ public class ImportJobQueryService : BaseQueryService<ImportJob, int>, IImportJo
     {
     }
 
-    public override async Task<ImportJob?> GetAsync(int key)
-    {
-        return await _dataSet
-            .AsNoTracking()
-            .FirstOrDefaultAsync(e => e.Id == key);
-    }
-
 }
