@@ -52,7 +52,7 @@ public class VectorSearchService : IVectorSearchService
                 new VectorStoreRecordKeyProperty("Id", typeof(Guid)),
                 new VectorStoreRecordDataProperty("DocumentId", typeof(string)){ IsFilterable = true },
                 new VectorStoreRecordDataProperty("Document", typeof(string)) { IsFilterable = true },
-                new VectorStoreRecordDataProperty("DocumentFileName", typeof(string)) { IsFilterable = true },
+                new VectorStoreRecordDataProperty("FileName", typeof(string)) { IsFilterable = true },
                 new VectorStoreRecordDataProperty("PageNumber", typeof(int)),
                 new VectorStoreRecordDataProperty("Index", typeof(int)),
                 new VectorStoreRecordDataProperty("Content", typeof(string)),
@@ -100,6 +100,7 @@ public class VectorSearchService : IVectorSearchService
     {
         var searchVector = await _textEmbeddingGenerationService.GenerateEmbeddingAsync(query);
         var collection = await GetCollection();
+
 
         var searchResult = await collection.VectorizedSearchAsync(
             searchVector,

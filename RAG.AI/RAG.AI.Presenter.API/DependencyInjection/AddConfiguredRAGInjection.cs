@@ -29,10 +29,10 @@ public static class AddConfiguredRAGInjection
             var kernelBuilder = Kernel.CreateBuilder();
 
             // Configure Ollama for both chat completion and embeddings
-            kernelBuilder.AddOllamaChatCompletion(
-                ragConfig.ChatCompletionModel,
-                ragConfig.OllamaUrl
-            );
+            //kernelBuilder.AddOllamaChatCompletion(
+            //    ragConfig.ChatCompletionModel,
+            //    ragConfig.OllamaUrl
+            //);
             kernelBuilder.AddOllamaTextEmbeddingGeneration(
                 ragConfig.EmbeddingModel,
                 ragConfig.OllamaUrl

@@ -4,7 +4,7 @@ public sealed class ContentChunk
 {
     public Guid Id { get; set; }
     public required string Document { get; set; }
-    public required string DocumentFileName { get; set; }
+    public required string FileName { get; set; }
     public required string DocumentId { get; set; }
     public int PageNumber { get; set; }
     public int Index { get; set; }

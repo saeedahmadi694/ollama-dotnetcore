@@ -2,10 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NCrontab;
-using Qdrant.Client.Grpc;
 using RAG.AI.Application.Commands.ScheduledJobLogs.CreateFinishJobLog;
 using RAG.AI.Application.Commands.ScheduledJobLogs.CreateNewScheduledJobLog;
-using RAG.AI.Domain.SeedWork.Utilities;
 using Serilog;
 
 namespace RAG.AI.BackgroundTasks;

@@ -72,7 +72,7 @@ public class StoreDocumentCommandHandler : IRequestHandler<StoreDocumentCommand,
                     Content = paragraph,
                     ContentEmbedding = embedding,
                     Index = bookIndex,
-                    DocumentFileName = request.Doc.Filename,
+                    FileName = request.Doc.Filename,
                 };
                 chunks.Add(chunk);
                 bookIndex++;
