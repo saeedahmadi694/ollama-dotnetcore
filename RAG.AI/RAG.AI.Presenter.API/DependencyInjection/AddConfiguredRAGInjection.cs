@@ -15,7 +15,7 @@ public static class AddConfiguredRAGInjection
         ragConfig = configuration.GetSection(RAGConfig.Key).Get<RAGConfig>();
 
         services.AddSingleton<IChatService, ChatService>();
-        services.AddSingleton<IRagService, RagService>();
+        //services.AddSingleton<IRagService, RagService>();
 
         // vector store and api
         services.AddQdrantVectorStore();
@@ -29,10 +29,10 @@ public static class AddConfiguredRAGInjection
             var kernelBuilder = Kernel.CreateBuilder();
 
             // Configure Ollama for both chat completion and embeddings
-            //kernelBuilder.AddOllamaChatCompletion(
-            //    ragConfig.ChatCompletionModel,
-            //    ragConfig.OllamaUrl
-            //);
+            kernelBuilder.AddOllamaChatCompletion(
+                ragConfig.ChatCompletionModel,
+                ragConfig.OllamaUrl
+            );
             kernelBuilder.AddOllamaTextEmbeddingGeneration(
                 ragConfig.EmbeddingModel,
                 ragConfig.OllamaUrl

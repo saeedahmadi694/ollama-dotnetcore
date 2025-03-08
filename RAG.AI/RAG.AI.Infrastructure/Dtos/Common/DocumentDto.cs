@@ -1,6 +1,6 @@
 ﻿namespace RAG.AI.Infrastructure.Dtos.Common;
 
-public record Document(
+public record DocumentDto(
     int JobId,
     string Title,
     List<Page> Pages,

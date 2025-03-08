@@ -160,8 +160,8 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 
 
-    var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
-    await dataSeeder.InitializeAsync();
+    //var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+    //await dataSeeder.InitializeAsync();
 }
 
 

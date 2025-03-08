@@ -2,6 +2,7 @@
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Embeddings;
 using Microsoft.SemanticKernel.Text;
+using RAG.AI.Domain.Aggregates.DocumentAggregate;
 using RAG.AI.Domain.SeedWork;
 using RAG.AI.Infrastructure.Configurations;
 using RAG.AI.Infrastructure.Dtos.Common;
@@ -36,7 +37,7 @@ public class StoreDocumentCommandHandler : IRequestHandler<StoreDocumentCommand,
             throw new NotFoundException("can not find importJob");
 
         var pages = request.Doc.Pages;
-        var chunks = new List<ContentChunk>();
+        var chunks = new List<DocumentFile>();
 
         _logger.Information(
             "Found {PageCount} pages in {BookTitle} {FileName}. Creating embeddings...",
@@ -63,11 +64,10 @@ public class StoreDocumentCommandHandler : IRequestHandler<StoreDocumentCommand,
             foreach (var (index, paragraph) in paragraphs.Select((x, index) => (index, x)))
             {
                 var embedding = embeddings[index];
-                var chunk = new ContentChunk
+                var chunk = new DocumentFile
                 {
                     Id = Guid.NewGuid(),
                     DocumentId = request.Doc.DocumentId.ToString(),
-                    Document = request.Doc.Title,
                     PageNumber = page.Pagenumber,
                     Content = paragraph,
                     ContentEmbedding = embedding,

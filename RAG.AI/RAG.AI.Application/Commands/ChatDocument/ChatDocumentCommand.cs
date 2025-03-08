@@ -2,7 +2,7 @@
 using NPOI.HSSF.Record;
 
 namespace RAG.AI.Application.Commands.ChatDocument;
-public record ChatDocumentCommand(string Query,Guid DocumentId) : ICommand<string>
+public record ChatDocumentCommand(string Query, List<string> DocumentIds) : ICommand<string>
 {
 }
 //public class CreateTicketCommandValidator : AbstractValidator<UploadDocumentCommand>

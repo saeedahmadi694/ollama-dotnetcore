@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
@@ -10,7 +11,12 @@ namespace RAG.AI.Infrastructure.Extentions;
 public static class ExtensionHelper
 {
 
-
+    public static T ToPayloadValue<T>(this string json)
+    {
+        JObject obj = JObject.Parse(json);
+        string value = obj.Properties().First().Value.ToString();
+        return (T)Convert.ChangeType(value, typeof(T));
+    }
 
     //public static UserType? GetUserType(this ClaimsPrincipal claimsPrincipal)
     //{

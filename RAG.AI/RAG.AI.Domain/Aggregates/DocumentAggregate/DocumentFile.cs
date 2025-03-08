@@ -1,9 +1,8 @@
-namespace RAG.AI.Infrastructure.Dtos.Common;
+namespace RAG.AI.Domain.Aggregates.DocumentAggregate;
 
-public sealed class ContentChunk
+public class DocumentFile
 {
     public Guid Id { get; set; }
-    public required string Document { get; set; }
     public required string FileName { get; set; }
     public required string DocumentId { get; set; }
     public int PageNumber { get; set; }

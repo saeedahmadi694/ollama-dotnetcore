@@ -37,7 +37,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Extentions\Adapters\" />
 		<Folder Include="Extentions\Attributes\" />
 		<Folder Include="FileManager\" />
 	</ItemGroup>

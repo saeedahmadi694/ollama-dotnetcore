@@ -50,7 +50,7 @@ public class ProcessImportJobCommandHandler : IRequestHandler<ProcessImportJobCo
         var textExtractionStrategy = TextExtractionStrategyFactory.GetStrategy(fileExtension);
         var pages = textExtractionStrategy.ExtractText(fileBytes);
 
-        var doc = new Document(importJob.Id, "", pages, importJob.FileName, importJob.UniqueId);
+        var doc = new DocumentDto(importJob.Id, "", pages, importJob.FileName, importJob.UniqueId);
         await _mediator.Send(new StoreDocumentCommand(doc), cancellationToken);
 
         return Unit.Value;

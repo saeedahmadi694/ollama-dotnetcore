@@ -3,7 +3,7 @@ using RAG.AI.Infrastructure.Dtos.Common;
 
 namespace RAG.AI.Application.Commands.StoreDocument;
 public record StoreDocumentCommand(
-        Document Doc) : ICommand<Unit>
+        DocumentDto Doc) : ICommand<Unit>
 {
 }
 //public class StoreDocumentCommandValidator : AbstractValidator<StoreDocumentCommand>
