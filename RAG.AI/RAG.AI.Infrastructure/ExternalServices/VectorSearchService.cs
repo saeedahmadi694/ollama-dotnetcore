@@ -67,17 +67,41 @@ public class VectorSearchService : IVectorSearchService
 
     public async Task UpsertItems(DocumentFile[] items)
     {
-        var collection = await GetCollection();
         var sw = Stopwatch.StartNew();
-        var keys = new List<ulong>();
-        await foreach (var key in collection.UpsertBatchAsync(items))
+        var points = new List<PointStruct>();
+
+
+        //public required string FileName { get; set; }
+        //public required string DocumentId { get; set; }
+        //public int PageNumber { get; set; }
+        //public int Index { get; set; }
+        //public required string Content { get; set; }
+
+        foreach (var item in items)
         {
-            keys.Add(key);
+            points.Add(
+                 new()
+                 {
+                     Id = item.Id,
+                     Vectors = item.ContentEmbedding.ToArray(),
+                     Payload = {
+                        [nameof(DocumentFile.DocumentId)] = item.DocumentId,
+                        [nameof(DocumentFile.FileName)] = item.FileName,
+                        [nameof(DocumentFile.PageNumber)] = item.PageNumber,
+                        [nameof(DocumentFile.Index)] = item.Index,
+                        [nameof(DocumentFile.Content)] = item.Content
+                     }
+                 }
+                );
         }
+
+
+        await _qdrantClient.UpsertAsync(_config.VectorCollectionName, points);
+
 
         _logger.LogInformation(
             "Added {RecordCount} records to Qdrant in {ElapsedMs}ms",
-            keys.Count,
+            items.Length,
             sw.ElapsedMilliseconds
         );
     }

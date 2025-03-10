@@ -11,5 +11,5 @@ public interface IVectorSearchService
     Task<IReadOnlyList<ScoredPointDto>> SearchVectorStore(string query, List<string> docId);
     Task ClearCollection();
     Task UpsertItems(DocumentFile[] items);
-    Task<IVectorStoreRecordCollection<ulong, DocumentFile>> GetCollection();
+    Task<CollectionInfo> GetCollection();
 }
