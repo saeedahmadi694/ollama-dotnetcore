@@ -116,12 +116,14 @@ public class VectorSearchService : IVectorSearchService
     {
         var searchVector = await _textEmbeddingGenerationService.GenerateEmbeddingAsync(query);
         //var collection = await GetCollection();
-        var condition = Match("DocumentId", docIds);
+        Condition condition = null;
+        if (docIds.Count > 0)
+            condition = Match("DocumentId", docIds);
 
         var points = await _qdrantClient.SearchAsync(
           _config.VectorCollectionName,
           searchVector,
-          //condition,
+          condition,
           limit: 5);
 
         //var searchResult = await collection.VectorizedSearchAsync(

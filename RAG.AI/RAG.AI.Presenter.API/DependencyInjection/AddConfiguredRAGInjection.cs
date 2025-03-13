@@ -15,15 +15,16 @@ public static class AddConfiguredRAGInjection
         ragConfig = configuration.GetSection(RAGConfig.Key).Get<RAGConfig>();
 
         services.AddSingleton<IChatService, ChatService>();
-        //services.AddSingleton<IRagService, RagService>();
 
-        // vector store and api
         services.AddQdrantVectorStore();
         services.AddSingleton<IVectorSearchService, VectorSearchService>();
-        //services.AddSingleton<IConvertToBook, PdfToBookConverter>();
-        //services.AddSingleton<QDrantApiClient>();
 
-        //services.AddSingleton<FileImportService>();
+        HttpClient httpClient = new()
+        {
+            Timeout = TimeSpan.FromMinutes(5),
+            BaseAddress = ragConfig.OllamaUrl
+        };
+
         services.AddSingleton(serviceProvider =>
         {
             var kernelBuilder = Kernel.CreateBuilder();
@@ -31,7 +32,7 @@ public static class AddConfiguredRAGInjection
             // Configure Ollama for both chat completion and embeddings
             kernelBuilder.AddOllamaChatCompletion(
                 ragConfig.ChatCompletionModel,
-                ragConfig.OllamaUrl
+                httpClient                
             );
             kernelBuilder.AddOllamaTextEmbeddingGeneration(
                 ragConfig.EmbeddingModel,

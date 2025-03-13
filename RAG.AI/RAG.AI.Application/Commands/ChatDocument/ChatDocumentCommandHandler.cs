@@ -40,19 +40,20 @@ public class ChatDocumentCommandHandler : IRequestHandler<ChatDocumentCommand, s
         //    textChunks.Length
         //);
 
-        var response = await _chatService.AskRaggedQuestion(request.Query, [.. textChunks]);
-        //var response = await _chatService.AskRaggedQuestion(request.Query, []);
-        //var prompt = new PropmtRequest()
-        //{
-        //    Model = "deepseek/deepseek-r1:free",
-        //    Prompt = request.Query.ToPrompt([.. textChunks])
-        //};
-        //var response = await _openRouterService.OpenRouterChatService.SendMessageAsync(prompt);
+        //var response = "sddd";
+        //var response = await _chatService.AskRaggedQuestion(request.Query, [.. textChunks]);
+
+        var prompt = new PropmtRequest()
+        {
+            Model = "qwen/qwq-32b:free",
+            Prompt = request.Query.ToPrompt([.. textChunks])
+        };
+        var response = await _openRouterService.OpenRouterChatService.SendMessageAsync(prompt);
 
         _logger.Information("--------- Answer -------------");
         _logger.Information("{Answer}", response);
 
-        return response;
+        return response.Message;
     }
 }
 

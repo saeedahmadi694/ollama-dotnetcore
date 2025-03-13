@@ -9,10 +9,10 @@ public class DataSeeder
     private readonly RAGConfig _config;
     private readonly QdrantClient _qdrantClient;
 
-    public DataSeeder(IOptions<RAGConfig> options, QdrantClient qdrantClient)
+    public DataSeeder(IOptions<RAGConfig> options)
     {
         _config = options.Value;
-        _qdrantClient = qdrantClient;
+        _qdrantClient = new QdrantClient(_config.QdrantUrl.Host);
     }
 
     public async Task InitializeAsync()
@@ -25,7 +25,7 @@ public class DataSeeder
         // Define vector parameters
         var vectorParams = new VectorParams
         {
-            Size = 100,
+            Size = 1024,
             Distance = Distance.Cosine
         };
 

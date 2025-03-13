@@ -44,8 +44,9 @@ public class ChatService(Kernel kernel) : IChatService
         );
 
         chat.AddUserMessage(prompt.ToString());
-        var answer = await chatCompletionService.GetChatMessageContentAsync(chat)!;
+        //var answer = await chatCompletionService.GetChatMessageContentAsync(chat)!;
 
-        return answer.Content!;
+        return "";
+        //return answer.Content!;
     }
 }
