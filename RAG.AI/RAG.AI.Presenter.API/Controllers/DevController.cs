@@ -23,7 +23,15 @@ public class DevController : ControllerBase
         throw new DuplicateException("Something is duplicated");
         return Ok("TEST SUCCESS");
     }
-
+    [HttpGet("stream-data")]
+    public async IAsyncEnumerable<string> StreamData()
+    {
+        for (int i = 1; i <= 10; i++)
+        {
+            yield return $"Data {i}\n";
+            await Task.Delay(1000); // Simulate delay
+        }
+    }
 }
 
 

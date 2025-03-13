@@ -10,7 +10,7 @@ public class TextExtractionStrategyFactory
     {
         return fileExtension.ToLower() switch
         {
-            ".pdf" => new PdfTextExtractionStrategy(),
+            //".pdf" => new PdfTextExtractionStrategy(),
             ".docx" => new DocxTextExtractionStrategy(),
             _ => throw new NotSupportedException($"Unsupported file type: {fileExtension}")
         };
